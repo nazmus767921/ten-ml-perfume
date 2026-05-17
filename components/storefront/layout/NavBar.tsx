@@ -1,10 +1,15 @@
 "use client"
 
+import Logo from "@/components/storefront/ui/Logo"
 import { TapButton } from "@/components/storefront/ui/TapButton"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
+  HandSoapIcon,
   ListIcon,
   MagnifyingGlassIcon,
+  PhosphorLogoIcon,
   ShoppingCartSimpleIcon,
   UserIcon,
   XIcon,
@@ -14,15 +19,11 @@ import { useState } from "react"
 
 const NAV_ACTION_BUTTONS = [
   {
-    icon: <MagnifyingGlassIcon />,
+    icon: <MagnifyingGlassIcon className="size-5" />,
     href: "#",
   },
   {
-    icon: <UserIcon />,
-    href: "#",
-  },
-  {
-    icon: <ShoppingCartSimpleIcon />,
+    icon: <UserIcon className="size-5" />,
     href: "#",
   },
 ]
@@ -53,14 +54,16 @@ const MENU_LINK_ITEMS = [
 const MenuOverlay = ({
   open,
   onClose,
+  onTap,
 }: {
   open: boolean
-  onClose: () => void
+  onTap?: () => void
+  onClose?: () => void
 }) => {
   return (
     <section
       className={cn(
-        "fixed inset-0 bg-primary",
+        "fixed inset-0 min-h-[calc(100svh+3.5rem)] bg-primary",
         open ? "visible flex" : "invisible hidden"
       )}
     >
@@ -79,6 +82,7 @@ const MenuOverlay = ({
             <TapButton
               className="w-full py-10 text-2xl text-primary-foreground uppercase"
               size={"lg"}
+              onClick={onTap}
               asChild
             >
               <Link href={item.href}>{item.text}</Link>
@@ -102,24 +106,48 @@ const Menu = () => {
         <ListIcon />
       </TapButton>
 
-      <MenuOverlay open={isOpen} onClose={handleClose} />
+      <MenuOverlay open={isOpen} onClose={handleClose} onTap={handleClose} />
     </>
+  )
+}
+
+const CartButton = () => {
+  const totalItems = 20
+
+  return (
+    <Link href={"/cart"}>
+      <div className="relative">
+        <Badge className="absolute -top-1.5 -right-1.5 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
+          {totalItems}
+        </Badge>
+        <TapButton>
+          <ShoppingCartSimpleIcon className="size-5" />
+        </TapButton>
+      </div>
+    </Link>
   )
 }
 
 export default function NavBar() {
   return (
     <div>
-      <nav className="fixed z-99 inset-x-0 top-0 w-full border-b border-border bg-background">
+      <nav className="fixed inset-x-0 top-0 z-99 w-full border-b border-border bg-background">
         <div className="flex h-(--navbar-height) w-full flex-1 items-center px-3 lg:px-8">
           <div className="flex flex-1 items-center justify-start">
             <Menu />
           </div>
-          <div className="">10ML</div>
+          <Button variant={"none"} asChild>
+            <Link href={"/"}>
+              <Logo />
+            </Link>
+          </Button>
           <div className="flex flex-1 items-center justify-end">
             {NAV_ACTION_BUTTONS.map((item) => (
-              <TapButton>{item.icon}</TapButton>
+              <TapButton asChild>
+                <Link href={item.href}>{item.icon}</Link>
+              </TapButton>
             ))}
+            <CartButton />
           </div>
         </div>
       </nav>
