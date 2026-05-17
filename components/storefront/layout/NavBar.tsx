@@ -63,7 +63,7 @@ const MenuOverlay = ({
   return (
     <section
       className={cn(
-        "fixed inset-0 min-h-[calc(100svh+3.5rem)] bg-primary",
+        "fixed z-10 inset-0 min-h-[calc(100svh+3.5rem)] bg-primary",
         open ? "visible flex" : "invisible hidden"
       )}
     >
@@ -116,8 +116,8 @@ const CartButton = () => {
 
   return (
     <Link href={"/cart"}>
-      <div className="relative">
-        <Badge className="absolute top-1 right-1 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
+      <div className="relative z-1">
+        <Badge className="absolute z-1 top-1 right-1 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
           {totalItems}
         </Badge>
         <TapButton>
