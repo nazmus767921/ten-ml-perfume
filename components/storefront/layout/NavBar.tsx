@@ -117,7 +117,7 @@ const CartButton = () => {
   return (
     <Link href={"/cart"}>
       <div className="relative">
-        <Badge className="absolute -top-1.5 -right-1.5 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
+        <Badge className="absolute top-1 right-1 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
           {totalItems}
         </Badge>
         <TapButton>
