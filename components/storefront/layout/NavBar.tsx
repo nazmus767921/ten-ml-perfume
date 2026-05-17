@@ -29,6 +29,10 @@ const NAV_ACTION_BUTTONS = [
 
 const MENU_LINK_ITEMS = [
   {
+    text: "home",
+    href: "/",
+  },
+  {
     text: "shop all",
     href: "/shop",
   },
