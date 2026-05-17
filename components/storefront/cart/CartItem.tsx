@@ -4,12 +4,13 @@ import { QuantityInput } from "@/components/form/QuantityInput"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemMedia,
-  ItemTitle,
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemMedia,
+    ItemTitle,
 } from "@/components/ui/item"
+import { TakaFormatter } from "@/lib/utils"
 import { TrashIcon } from "@phosphor-icons/react/dist/ssr"
 import Image from "next/image"
 import { useState } from "react"
@@ -22,15 +23,15 @@ type Props = {
 
 export default function CartItem({
   price = 12000,
-  title = "Dior Sauvage Elixir",
+  title = "Dior Sauvage Elixir something loogn",
   description = "100mL",
 }: Props) {
   const [quantity, setQuantity] = useState(1)
 
-  const BDT = <>&#2547;</>
+
 
   return (
-    <Item>
+    <Item className="py-6">
       <ItemMedia>
         <Image
           src="https://images.unsplash.com/photo-1588514912908-8f5891714f8d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=120&q=120"
@@ -43,8 +44,8 @@ export default function CartItem({
       <ItemContent>
         <div className="flex justify-between gap-2">
           <div>
-            <ItemTitle className="text-base">{title}</ItemTitle>
-            <div className="flex gap-1">
+            <ItemTitle className="text-base tracking-tight leading-4.5">{title}</ItemTitle>
+            <div className="flex gap-1 mt-1">
               <Badge className="bg-primary p-0.5 px-2 text-primary-foreground">
                 {description}
               </Badge>
@@ -52,11 +53,11 @@ export default function CartItem({
                 variant={"secondary"}
                 className="p-0.5 px-2"
               >
-                {BDT} {price}
+                 {TakaFormatter.format(price)}
               </Badge>
             </div>
-            <ItemTitle className="mt-1 text-base">
-              {BDT} {quantity * price}
+            <ItemTitle className="mt-3 text-base">
+               {TakaFormatter.format(quantity * price)}
             </ItemTitle>
           </div>
 
