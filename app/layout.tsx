@@ -3,6 +3,7 @@ import { Geist_Mono, Inter } from "next/font/google"
 import AppShell from "@/components/storefront/layout/AppShell"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -18,19 +19,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn(
-        "antialiased",
-        fontMono.variable,
-        "font-sans",
-        inter.variable
-      )}
-    >
+    <html lang="en" suppressHydrationWarning className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}>
       <body>
         <ThemeProvider>
-          <AppShell>{children}</AppShell>
+          <NuqsAdapter>
+            <AppShell>{children}</AppShell>
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </html>

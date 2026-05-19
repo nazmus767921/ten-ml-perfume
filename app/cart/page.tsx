@@ -1,4 +1,5 @@
 import CartItem from "@/components/storefront/cart/CartItem"
+import PageTitle from "@/components/storefront/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -9,11 +10,12 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { Separator } from "@/components/ui/separator"
-import { cn, TakaFormatter } from "@/lib/utils"
-import { Icon } from "@phosphor-icons/react"
-import { ArrowRightIcon, ShoppingBagIcon } from "@phosphor-icons/react/dist/ssr"
+import { TakaFormatter } from "@/lib/utils"
+import {
+  ArrowRightIcon,
+  ShoppingCartIcon,
+} from "@phosphor-icons/react/dist/ssr"
 import Link from "next/link"
-import { ReactNode } from "react"
 
 const SummaryItem = ({ title, value }: { title: string; value: string }) => (
   <Item size={"xs"} className="py-0.5">
@@ -28,30 +30,6 @@ const SummaryItem = ({ title, value }: { title: string; value: string }) => (
   </Item>
 )
 
-const PageTitle = ({
-  title,
-  subtitle,
-  icon,
-  className,
-}: {
-  title: string
-  subtitle?:string
-  icon?: ReactNode
-  className?: string
-}) => (
-  <div className="flex flex-col">
-      <span
-        className={cn(
-          "mt-3 mb-3 flex items-center text-3xl font-bold uppercase",
-          className
-        )}
-      >
-        {icon && <span className="mr-1">{icon}</span>} {title}
-      </span>
-     {subtitle ? <span className="text-muted-foreground/80 text-xs">{subtitle}</span>: null}
-  </div>
-)
-
 function CartPage() {
   const cartSubtotalTotal = 12000
   const totalItems = 2
@@ -59,9 +37,13 @@ function CartPage() {
   const cartTotal = 12200
 
   return (
-    <section className="container mx-auto flex min-h-(--nav-safe-vh) flex-col pb-4 lg:pt-4 lg:pb-8">
+    <section className="container mx-auto flex min-h-(--page-height-safe) flex-col pb-4 lg:pt-4 lg:pb-8">
       <div className="px-3">
-        <PageTitle icon={<ShoppingBagIcon />} title="Cart" subtitle="Thank you for choosing our service"/>
+        <PageTitle
+          icon={<ShoppingCartIcon />}
+          title="Cart"
+          subtitle="Thank you for choosing our service"
+        />
       </div>
 
       {/* Cart Items */}
@@ -78,7 +60,7 @@ function CartPage() {
         {/* FOOTER */}
         <div className="min-h-64 w-full lg:hidden" /> {/* Spacer */}
         <div className="relative w-full">
-          <div className="fixed bottom-4 mt-auto w-full px-3 lg:sticky lg:top-[calc(var(--navbar-height)+1rem)] lg:bottom-auto lg:my-0 lg:px-0">
+          <div className="fixed bottom-4 mt-auto w-full px-3 lg:sticky lg:top-[calc(var(--navbar-height)+5rem)] lg:bottom-auto lg:my-0 lg:px-0">
             <Card className="w-full max-w-xl bg-background/80 backdrop-blur-2xl">
               <CardHeader>
                 <CardTitle className="text-lg font-bold">
@@ -127,7 +109,7 @@ function CartPage() {
                   size={"sm"}
                   asChild
                 >
-                 <Link href='/shop'>Continue Shopping</Link>
+                  <Link href="/shop">Continue Shopping</Link>
                 </Button>
               </CardContent>
             </Card>

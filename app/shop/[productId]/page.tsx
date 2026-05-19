@@ -11,7 +11,6 @@ import {
   ShoppingBagIcon,
   TildeIcon,
 } from "@phosphor-icons/react/dist/ssr"
-import { keyframes } from "motion"
 
 const MY_IMAGES = [
   {

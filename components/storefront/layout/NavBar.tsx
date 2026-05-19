@@ -80,6 +80,7 @@ const MenuOverlay = ({
         {MENU_LINK_ITEMS.map((item) => {
           return (
             <TapButton
+            key={item.text}
               className="w-full py-10 text-2xl text-primary-foreground uppercase"
               size={"lg"}
               onClick={onTap}
