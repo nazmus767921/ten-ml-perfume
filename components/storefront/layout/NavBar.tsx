@@ -131,7 +131,7 @@ const CartButton = () => {
 export default function NavBar() {
   return (
     <div>
-      <nav className="fixed inset-x-0 top-0 z-99 w-full border-b border-border bg-background">
+      <nav className="w-full border-b border-border bg-background">
         <div className="flex h-(--navbar-height) w-full flex-1 items-center px-3 lg:px-8">
           <div className="flex flex-1 items-center justify-start">
             <Menu />
@@ -152,8 +152,7 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Spacer */}
-      <div className="h-(--navbar-height) w-full" />
+     
     </div>
   )
 }
