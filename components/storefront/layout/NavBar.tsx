@@ -203,7 +203,7 @@ const BottomNavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (pathname.startsWith("/cart")) return null
+  if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) return null
 
   return (
     <motion.nav

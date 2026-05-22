@@ -1,10 +1,8 @@
 import ConditionalFooter from "@/components/storefront/layout/ConditionalFooter"
 import NavBar from "@/components/storefront/layout/NavBar"
+import CheckoutAwareBanner from "@/components/storefront/layout/CheckoutAwareBanner"
 import { ReactNode } from "react"
-// app/page.tsx
-import AnnouncementBanner, {
-  BannerItem,
-} from "@/components/storefront/ui/AnnouncementBanner"
+import type { BannerItem } from "@/components/storefront/ui/AnnouncementBanner"
 
 // Mock function representing your backend API fetch
 async function getBannerData(): Promise<BannerItem[]> {
@@ -40,11 +38,7 @@ export default async function AppShell({ children }: Props) {
   return (
     <>
       <div className="fixed inset-x-0 top-0 z-99">
-        <AnnouncementBanner
-          items={bannerItems}
-          speed={30}
-          pauseOnHover={true}
-        />
+        <CheckoutAwareBanner items={bannerItems} />
         <NavBar />
       </div>
       {/* Spacer */}
