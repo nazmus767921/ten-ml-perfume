@@ -206,7 +206,7 @@ const BottomNavBar = () => {
 
   return (
     <motion.nav
-      className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 lg:hidden"
+      className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 lg:hidden"
       initial={{ y: 0 }}
       animate={{ y: isVisible ? 0 : 120 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}

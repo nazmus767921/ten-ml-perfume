@@ -6,6 +6,15 @@ export interface ProductColor {
   label?: string;
 }
 
+export interface MlVariant {
+  /** Size in millilitres */
+  ml: number;
+  /** Price for this variant */
+  price: number;
+  /** Original (undiscounted) price for this variant */
+  originalPrice?: number;
+}
+
 export interface Product {
   id: string | number;
   name: string;
@@ -23,4 +32,6 @@ export interface Product {
   outOfStock?: boolean;
   /** Short descriptor e.g. "Super white" */
   colorLabel?: string;
+  /** Available size variants with per-ml pricing */
+  mlVariants?: MlVariant[];
 }

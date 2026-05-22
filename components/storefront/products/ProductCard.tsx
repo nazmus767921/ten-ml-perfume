@@ -1,13 +1,15 @@
-import ProductBadge  from "@/components/storefront/products/ProductBadge"
+"use client"
+
+import ProductBadge from "@/components/storefront/products/ProductBadge"
 import StarRating from "@/components/storefront/products/StarRating"
 import { Product } from "@/components/storefront/products/types"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { TakaFormatter } from "@/lib/utils"
 import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr"
-import { nanoid } from "nanoid"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 interface ProductCardProps {
   product: Product
@@ -19,8 +21,17 @@ export const ProductCard = ({ product, onAddToCart, onNotifyMe }: ProductCardPro
   const isOutOfStock = product.outOfStock
   const isAddToCartDisabled = isOutOfStock
 
+  const mlVariants = product.mlVariants ?? []
+  const [selectedMl, setSelectedMl] = useState<number | null>(
+    mlVariants.length > 0 ? mlVariants[0].ml : null,
+  )
+
+  const selectedVariant = mlVariants.find((v) => v.ml === selectedMl) ?? null
+  const displayPrice = selectedVariant?.price ?? product.price
+  const displayOriginalPrice = selectedVariant?.originalPrice ?? product.originalPrice
+
   return (
-    <article key={nanoid()} className="w-full">
+    <article className="w-full">
       {/* image */}
       <Link href={`/shop/${product.id}`}>
         <div className="relative aspect-square w-full bg-gray-50">
@@ -54,33 +65,34 @@ export const ProductCard = ({ product, onAddToCart, onNotifyMe }: ProductCardPro
         <div className="px-1">
           <StarRating value={4} />
           <h3 className="mt-1 text-base leading-5 font-bold tracking-tighter md:text-lg line-clamp-2">{product.name}</h3>
-         
         </div>
 
-         <div className="mt-2 flex flex-wrap gap-1">
-            <Badge className="text-xs" variant={"outline"}>
-              3ml
-            </Badge>
-            <Badge className="text-xs" variant={"outline"}>
-              5ml
-            </Badge>
-            <Badge className="text-xs" variant={"outline"}>
-              10ml
-            </Badge>
-            <Badge className="text-xs" variant={"outline"}>
-              15ml
-            </Badge>
-            <Badge className="text-xs" variant={"outline"}>
-              30ml
-            </Badge>
+        {/* ML variant badges — interactive */}
+        {mlVariants.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {mlVariants.map((variant) => {
+              const isSelected = selectedMl === variant.ml
+              return (
+                <Badge key={variant.ml} variant={isSelected ? "default" : "outline"} asChild>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMl(variant.ml)}
+                    className={isSelected ? "cursor-pointer" : "cursor-pointer hover:bg-muted hover:text-muted-foreground"}
+                  >
+                    {variant.ml}ml
+                  </button>
+                </Badge>
+              )
+            })}
           </div>
+        )}
 
         {/* price-actions */}
         <div className="mt-2 flex gap-1 border border-border">
           <div className="flex flex-1 flex-col justify-center py-1 pl-2">
-            <span className="text-sm font-bold text-foreground/80">{TakaFormatter.format(product.price)}</span>
-            {product.originalPrice && (
-              <span className="text-xs leading-none text-muted-foreground/60 line-through">{TakaFormatter.format(product.originalPrice)}</span>
+            <span className="text-sm font-bold text-foreground/80">{TakaFormatter.format(displayPrice)}</span>
+            {displayOriginalPrice && (
+              <span className="text-xs leading-none text-muted-foreground/60 line-through">{TakaFormatter.format(displayOriginalPrice)}</span>
             )}
           </div>
 

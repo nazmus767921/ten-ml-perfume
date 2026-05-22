@@ -4,6 +4,7 @@
 
 import { Button } from "@/components/ui/button"
 import { ArrowRightIcon } from "@phosphor-icons/react"
+import Link from "next/link"
 import { useState, useEffect, useCallback, useRef } from "react"
 
 // ==========================================
@@ -167,7 +168,9 @@ function BrandList({ brands, activeBrand, onBrandSelect }: BrandListProps) {
           />
         </button>
       ))}
-      <Button size={'lg'} className="py-6 uppercase text-lg lg:text-xl mt-6 hover:bg-primary/80">Find your perfect scent <ArrowRightIcon className="size-6 ms-4 animate-bounce" /></Button>
+      <Link href="/find-scent">
+        <Button size={'lg'} className="py-6 uppercase text-lg lg:text-xl mt-6 hover:bg-primary/80">Find your perfect scent <ArrowRightIcon className="size-6 ms-4 animate-bounce" /></Button>
+      </Link>
     </div>
   )
 }

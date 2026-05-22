@@ -20,6 +20,13 @@ const DEFAULT_PRODUCTS: Product[] = [
       { value: "#111827", label: "Obsidian" },
     ],
     defaultColorIndex: 0,
+    mlVariants: [
+      { ml: 3, price: 1200 },
+      { ml: 5, price: 1800 },
+      { ml: 10, price: 3200 },
+      { ml: 15, price: 4800 },
+      { ml: 30, price: 8500 },
+    ],
   },
   {
     id: 2,
@@ -32,6 +39,13 @@ const DEFAULT_PRODUCTS: Product[] = [
       { value: "#78350f", label: "Dark Cedar" },
     ],
     defaultColorIndex: 0,
+    mlVariants: [
+      { ml: 3, price: 1500 },
+      { ml: 5, price: 2400 },
+      { ml: 10, price: 4500 },
+      { ml: 15, price: 6500 },
+      { ml: 30, price: 12000 },
+    ],
   },
   {
     id: 3,
@@ -46,6 +60,13 @@ const DEFAULT_PRODUCTS: Product[] = [
     ],
     colorLabel: "Frosted Crystal",
     defaultColorIndex: 1,
+    mlVariants: [
+      { ml: 3, price: 800 },
+      { ml: 5, price: 1200 },
+      { ml: 10, price: 2200 },
+      { ml: 15, price: 3200 },
+      { ml: 30, price: 5800 },
+    ],
   },
   {
     id: 4,
@@ -57,6 +78,13 @@ const DEFAULT_PRODUCTS: Product[] = [
       { value: "#ca8a04", label: "Liquid Gold" },
     ],
     defaultColorIndex: 0,
+    mlVariants: [
+      { ml: 3, price: 2200 },
+      { ml: 5, price: 3500 },
+      { ml: 10, price: 6500 },
+      { ml: 15, price: 9500 },
+      { ml: 30, price: 18000 },
+    ],
   },
   {
     id: 5,
@@ -69,6 +97,13 @@ const DEFAULT_PRODUCTS: Product[] = [
       { value: "#64748b", label: "Slate Gray" },
     ],
     defaultColorIndex: 0,
+    mlVariants: [
+      { ml: 3, price: 700 },
+      { ml: 5, price: 1100 },
+      { ml: 10, price: 2000 },
+      { ml: 15, price: 3000 },
+      { ml: 30, price: 5500 },
+    ],
   },
   {
     id: 6,
@@ -77,6 +112,13 @@ const DEFAULT_PRODUCTS: Product[] = [
     badge: "sales",
     colors: [{ value: "#f59e0b", label: "Warm Honey" }],
     defaultColorIndex: 0,
+    mlVariants: [
+      { ml: 3, price: 600 },
+      { ml: 5, price: 900 },
+      { ml: 10, price: 1600 },
+      { ml: 15, price: 2400 },
+      { ml: 30, price: 4500 },
+    ],
   },
 ]
 
