@@ -1,3 +1,4 @@
+import ConditionalFooter from "@/components/storefront/layout/ConditionalFooter"
 import NavBar from "@/components/storefront/layout/NavBar"
 import { ReactNode } from "react"
 // app/page.tsx
@@ -49,6 +50,7 @@ export default async function AppShell({ children }: Props) {
       {/* Spacer */}
       <div className="h-[calc(var(--navbar-height)+var(--announcement-banner-height))] w-full" />
       {children}
+      <ConditionalFooter />
     </>
   )
 }

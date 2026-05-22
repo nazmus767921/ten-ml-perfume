@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
+
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["bunx", "@playwright/mcp@latest"],
+      "enabled": true
+    },
+    "next-devtools": {
+      "type": "local",
+      "command": ["bunx", "next-devtools-mcp@latest"],
+      "enabled": true
+    }
+  }
+}

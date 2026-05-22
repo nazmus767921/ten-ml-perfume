@@ -4,6 +4,7 @@ import BrandFilterSection from "@/components/storefront/products/filters/BrandFi
 import NotesFilterSection from "@/components/storefront/products/filters/NotesFilterSection"
 import PerfumeForFilterSection from "@/components/storefront/products/filters/PerfumeForFilterSection"
 import { Button } from "@/components/ui/button"
+import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 
 export default function ProductsFiltersBase() {
   const FRAG_NOTES = {
@@ -27,8 +28,8 @@ export default function ProductsFiltersBase() {
 
 export const FindScentButton = () => {
   return (
-    <Button type="submit" size={"sm"} className="w-full">
-      Find
+    <Button type="submit" size={"lg"} className="w-full text-lg">
+      <MagnifyingGlassIcon className="size-5"/> Find
     </Button>
   )
 }
