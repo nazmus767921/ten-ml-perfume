@@ -39,3 +39,6 @@ pnpm-debug.log*
 next-env.d.ts
 
 /.playwright-mcp/
+/.sisyphus/
+.vercel
+.env*

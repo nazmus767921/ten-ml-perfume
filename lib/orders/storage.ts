@@ -1,62 +1,58 @@
-import { promises as fs } from "fs"
-import path from "path"
+import { put, get, list } from "@vercel/blob"
 import type { Order } from "@/lib/types/order"
 
-/**
- * In-memory fallback store for environments with read-only filesystem
- * (e.g., Vercel serverless functions where only /tmp is writable).
- */
+const BLOB_PREFIX = "orders/"
+
+function blobKey(id: string): string {
+  return `${BLOB_PREFIX}${id}.json`
+}
+
+function canUseBlob(): boolean {
+  return !!process.env.BLOB_READ_WRITE_TOKEN
+}
+
+async function streamToText(
+  stream: ReadableStream<Uint8Array>,
+): Promise<string> {
+  const reader = stream.getReader()
+  const decoder = new TextDecoder()
+  let result = ""
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    result += decoder.decode(value, { stream: true })
+  }
+  result += decoder.decode()
+  return result
+}
+
+/** In-memory fallback for local dev when BLOB_READ_WRITE_TOKEN is not set. */
 const memStore = new Map<string, Order>()
 
-const DATA_DIR = path.join(process.cwd(), "data", "orders")
-
-let _isReadonly: boolean | null = null
-
-async function isReadonlyFs(): Promise<boolean> {
-  // Cache the check after first call
-  if (_isReadonly !== null) return _isReadonly
-
-  try {
-    await fs.access(process.cwd(), fs.constants.W_OK)
-    _isReadonly = false
-    return false
-  } catch {
-    _isReadonly = true
-    return true
-  }
-}
-
-async function ensureDir(): Promise<void> {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true })
-  } catch {
-    // directory exists or FS is read-only — handled by caller
-  }
-}
-
-function filePath(id: string): string {
-  return path.join(DATA_DIR, `${id}.json`)
-}
-
 export async function saveOrder(order: Order): Promise<void> {
-  if (await isReadonlyFs()) {
-    memStore.set(order.id, order)
+  if (canUseBlob()) {
+    await put(blobKey(order.id), JSON.stringify(order), {
+      access: "private",
+      contentType: "application/json",
+      addRandomSuffix: false,
+    })
     return
   }
-  await ensureDir()
-  await fs.writeFile(filePath(order.id), JSON.stringify(order, null, 2), "utf-8")
+  memStore.set(order.id, order)
 }
 
 export async function getOrder(id: string): Promise<Order | null> {
-  if (await isReadonlyFs()) {
-    return memStore.get(id) ?? null
+  if (canUseBlob()) {
+    try {
+      const result = await get(blobKey(id), { access: "private" })
+      if (!result || !result.stream) return null
+      const text = await streamToText(result.stream)
+      return JSON.parse(text) as Order
+    } catch {
+      return null
+    }
   }
-  try {
-    const data = await fs.readFile(filePath(id), "utf-8")
-    return JSON.parse(data) as Order
-  } catch {
-    return null
-  }
+  return memStore.get(id) ?? null
 }
 
 export async function updateOrder(
@@ -71,25 +67,29 @@ export async function updateOrder(
 }
 
 export async function listOrders(): Promise<Order[]> {
-  if (await isReadonlyFs()) {
-    const orders = Array.from(memStore.values())
-    orders.sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    return orders
-  }
-  await ensureDir()
-  const files = await fs.readdir(DATA_DIR)
-  const orders: Order[] = []
-  for (const file of files) {
-    if (!file.endsWith(".json")) continue
+  if (canUseBlob()) {
     try {
-      const data = await fs.readFile(path.join(DATA_DIR, file), "utf-8")
-      orders.push(JSON.parse(data))
+      const { blobs } = await list({ prefix: BLOB_PREFIX })
+      const orders: Order[] = []
+      for (const blobEntry of blobs) {
+        try {
+          const result = await get(blobEntry.pathname, { access: "private" })
+          if (!result || !result.stream) continue
+          const text = await streamToText(result.stream)
+          orders.push(JSON.parse(text) as Order)
+        } catch {
+        }
+      }
+      orders.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      )
+      return orders
     } catch {
-      // skip malformed files
+      return []
     }
   }
+  const orders = Array.from(memStore.values())
   orders.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   )
