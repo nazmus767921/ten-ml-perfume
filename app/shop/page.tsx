@@ -140,12 +140,6 @@ const SortFilter = () => {
   )
 }
 
-interface ProductCardProps {
-  product: Product
-  onAddToCart?: (product: Product, qty: number, colorIndex: number) => void
-  onNotifyMe?: (product: Product) => void
-}
-
 export default function ShopPage() {
   return (
     <section className="container mx-auto flex min-h-(--page-height-safe) flex-col pb-4 lg:pt-4 lg:pb-8">

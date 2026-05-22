@@ -1,6 +1,5 @@
 import ProductImageSlider from "@/components/storefront/products/ProductImageSlider"
-import ProductWishlistButton from "@/components/storefront/products/ProductWishlistButton"
-import VariantSelector from "@/components/storefront/products/VariantSelector"
+import ProductDetailAddToCartSection from "@/components/storefront/products/ProductDetailAddToCartSection"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,7 +7,6 @@ import { TakaFormatter } from "@/lib/utils"
 import RatingAndReviews, { RatingSummary, Review } from "@/components/storefront/products/ProductRatingAndReview";
 import {
   DropIcon,
-  ShoppingBagIcon,
   TildeIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
@@ -131,21 +129,20 @@ export default async function ProductDetailsPage({
             {TakaFormatter.format(1200)}
           </div>
 
-          {/* variant selector */}
-          <div className="mt-6">
-            <VariantSelector />
-          </div>
-
-          {/* action button */}
-          <div className="mt-6 flex w-full gap-2">
-            <Button variant={"outline"} size={"lg"} className="flex-1 text-lg">
-              <ShoppingBagIcon className="size-5" /> Add to Cart
-            </Button>
-            <Button size={"lg"} className="flex-1 text-lg">
-              Buy Now
-            </Button>
-            <ProductWishlistButton />
-          </div>
+          <ProductDetailAddToCartSection
+            product={{
+              id: productId,
+              name: "Latafa Hawas",
+              price: 1200,
+              mlVariants: [
+                { ml: 3, price: 1200 },
+                { ml: 5, price: 1800 },
+                { ml: 10, price: 3200 },
+                { ml: 15, price: 4800 },
+                { ml: 30, price: 8500 },
+              ],
+            }}
+          />
 
           {/* description */}
           <Card className="mt-6 lg:mt-8">

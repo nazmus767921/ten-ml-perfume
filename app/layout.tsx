@@ -1,6 +1,7 @@
 import { Geist_Mono, Inter } from "next/font/google"
 
 import AppShell from "@/components/storefront/layout/AppShell"
+import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
@@ -25,6 +26,7 @@ export default function RootLayout({
           <NuqsAdapter>
             <AppShell>{children}</AppShell>
           </NuqsAdapter>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

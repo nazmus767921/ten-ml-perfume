@@ -6,18 +6,19 @@ import { Product } from "@/components/storefront/products/types"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { TakaFormatter } from "@/lib/utils"
-import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr"
+import { useCartStore } from "@/lib/stores/cart-store"
+import { ShoppingCartIcon } from "@phosphor-icons/react"
 import Image from "next/image"
 import Link from "next/link"
+import { toast } from "sonner"
 import { useState } from "react"
 
 interface ProductCardProps {
   product: Product
-  onAddToCart?: (product: Product, qty: number, colorIndex: number) => void
-  onNotifyMe?: (product: Product) => void
 }
 
-export const ProductCard = ({ product, onAddToCart, onNotifyMe }: ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
+  const addItem = useCartStore((s) => s.addItem)
   const isOutOfStock = product.outOfStock
   const isAddToCartDisabled = isOutOfStock
 
@@ -29,6 +30,20 @@ export const ProductCard = ({ product, onAddToCart, onNotifyMe }: ProductCardPro
   const selectedVariant = mlVariants.find((v) => v.ml === selectedMl) ?? null
   const displayPrice = selectedVariant?.price ?? product.price
   const displayOriginalPrice = selectedVariant?.originalPrice ?? product.originalPrice
+
+  const handleAddToCart = () => {
+    if (selectedMl === null || !selectedVariant) return
+    addItem({
+      productId: product.id,
+      name: product.name,
+      imageUrl: "",
+      ml: selectedMl,
+      price: selectedVariant.price,
+    })
+    toast.success("Added to cart", {
+      description: `${product.name} (${selectedMl}mL)`,
+    })
+  }
 
   return (
     <article className="w-full">
@@ -97,7 +112,7 @@ export const ProductCard = ({ product, onAddToCart, onNotifyMe }: ProductCardPro
           </div>
 
           <div className="shrink-0">
-            <Button className="aspect-square size-full min-h-12 lg:aspect-auto lg:min-h-13" disabled={isAddToCartDisabled}>
+            <Button className="aspect-square size-full min-h-12 lg:aspect-auto lg:min-h-13" disabled={isAddToCartDisabled} onClick={handleAddToCart}>
               <ShoppingCartIcon className="size-5" />
               <span className="hidden pt-1 text-sm tracking-wide uppercase lg:flex">Add to Cart</span>
             </Button>

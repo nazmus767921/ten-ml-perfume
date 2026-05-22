@@ -5,6 +5,7 @@ import { TapButton } from "@/components/storefront/ui/TapButton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useCartStore } from "@/lib/stores/cart-store"
 import {
   ListIcon,
   MagnifyingGlassIcon,
@@ -162,7 +163,7 @@ const Menu = ({ pathname }: { pathname?: string }) => {
 }
 
 const CartButton = () => {
-  const totalItems = 20
+  const totalItems = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
 
   return (
     <Link href="/cart">
@@ -182,7 +183,7 @@ const BottomNavBar = () => {
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
-  const totalItems = 3
+  const totalItems = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
 
   useEffect(() => {
     const handleScroll = () => {
@@ -211,7 +212,7 @@ const BottomNavBar = () => {
       animate={{ y: isVisible ? 0 : 120 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="flex items-center gap-2 rounded-full bg-primary px-4 py-2 shadow-lg shadow-black/20">
+      <div className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 shadow-lg shadow-black/20">
         {NAV_ACTION_BUTTONS.map((btn) => (
           <TapButton key={btn.ariaLabel} asChild aria-label={btn.ariaLabel} className="text-primary-foreground">
             <Link href={btn.href}>{btn.icon}</Link>
@@ -220,9 +221,11 @@ const BottomNavBar = () => {
         <div className="h-5 w-px bg-primary-foreground/20" />
         <Link href="/cart">
           <div className="relative">
-            <Badge className="absolute top-2 right-1 ring-3 z-1 aspect-square rounded-full text-[0.55rem] bg-primary-foreground text-primary min-w-[18px] h-4.5 flex items-center justify-center px-1">
-              {totalItems}
-            </Badge>
+            {totalItems > 0 && (
+              <Badge className="absolute top-2 right-1 ring-3 z-1 aspect-square rounded-full text-[0.55rem] bg-primary-foreground text-primary min-w-[18px] h-4.5 flex items-center justify-center px-1">
+                {totalItems}
+              </Badge>
+            )}
             <TapButton aria-label={`View cart, ${totalItems} items`} className="text-primary-foreground">
               <ShoppingCartSimpleIcon className="size-5" />
             </TapButton>
