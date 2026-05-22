@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import DesktopProductsFilters from "@/components/storefront/products/filters/DesktopProductsFilters"
 import PageTitle from "@/components/storefront/ui/PageHeader"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr"
@@ -11,7 +12,9 @@ export default function FindScentPage() {
 
       <div className="mt-4 flex w-full flex-1 items-start justify-center px-3">
         <div className="w-full max-w-xl">
-          <DesktopProductsFilters />
+          <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" />}>
+            <DesktopProductsFilters />
+          </Suspense>
         </div>
       </div>
     </section>
