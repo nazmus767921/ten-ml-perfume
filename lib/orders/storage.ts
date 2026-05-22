@@ -35,6 +35,7 @@ export async function saveOrder(order: Order): Promise<void> {
       access: "private",
       contentType: "application/json",
       addRandomSuffix: false,
+      allowOverwrite: true,
     })
     return
   }

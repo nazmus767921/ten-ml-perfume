@@ -55,7 +55,7 @@ export interface SSLCommerzValidationResponse {
 
 export async function initiateSSLSession(
   params: SSLCommerzInitParams,
-  timeoutMs = 10000,
+  timeoutMs = 3000,
 ): Promise<SSLCommerzInitResponse> {
   const config = getConfig()
   const formData = new URLSearchParams()
@@ -86,37 +86,29 @@ export async function initiateSSLSession(
 
   const initUrl = `${getBaseUrl()}/gwprocess/v4/api.php`
 
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), timeoutMs)
-
-  try {
-    const response = await fetch(initUrl, {
+  const response = await Promise.race([
+    fetch(initUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: formData.toString(),
-      signal: controller.signal,
-    })
+    }),
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("SSLCommerz initiation timed out")), timeoutMs),
+    ),
+  ])
 
-    if (!response.ok) {
-      throw new Error(`SSLCommerz API error: ${response.status}`)
-    }
-
-    return response.json()
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      throw new Error("SSLCommerz initiation timed out")
-    }
-    throw error
-  } finally {
-    clearTimeout(timeout)
+  if (!response.ok) {
+    throw new Error(`SSLCommerz API error: ${response.status}`)
   }
+
+  return response.json() as Promise<SSLCommerzInitResponse>
 }
 
 export async function validateSSLTransaction(
   valId: string,
-  timeoutMs = 10000,
+  timeoutMs = 5000,
 ): Promise<SSLCommerzValidationResponse> {
   const config = getConfig()
   const url = new URL(`${getBaseUrl()}/validator/api/validationserverAPI.php`)
@@ -126,25 +118,16 @@ export async function validateSSLTransaction(
   url.searchParams.set("v", "1")
   url.searchParams.set("format", "json")
 
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+  const response = await Promise.race([
+    fetch(url.toString()),
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("SSLCommerz validation timed out")), timeoutMs),
+    ),
+  ])
 
-  try {
-    const response = await fetch(url.toString(), {
-      signal: controller.signal,
-    })
-
-    if (!response.ok) {
-      throw new Error(`SSLCommerz validation error: ${response.status}`)
-    }
-
-    return response.json()
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      throw new Error("SSLCommerz validation timed out")
-    }
-    throw error
-  } finally {
-    clearTimeout(timeout)
+  if (!response.ok) {
+    throw new Error(`SSLCommerz validation error: ${response.status}`)
   }
+
+  return response.json() as Promise<SSLCommerzValidationResponse>
 }
