@@ -364,7 +364,7 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
 export interface RatingAndReviewsProps {
   summary: RatingSummary
   reviews: Review[]
-  onSubmitReview: (payload: WriteReviewPayload) => Promise<void> | void
+  onSubmitReview?: (payload: WriteReviewPayload) => Promise<void> | void
 }
 
 export default function RatingAndReviews({
@@ -372,6 +372,7 @@ export default function RatingAndReviews({
   reviews,
   onSubmitReview,
 }: RatingAndReviewsProps) {
+  const handleSubmitReview = onSubmitReview ?? (async () => {})
   const [api, setApi] = useState<CarouselApi>()
   const [activeReviewIndex, setActiveReviewIndex] = useState(0)
 
@@ -447,7 +448,7 @@ export default function RatingAndReviews({
       </div>
 
       {/* ── Write a Review ── */}
-      <WriteReviewForm onSubmit={onSubmitReview} />
+      <WriteReviewForm onSubmit={handleSubmitReview} />
     </section>
   )
 }
