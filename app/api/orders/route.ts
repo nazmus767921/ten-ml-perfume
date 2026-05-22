@@ -118,9 +118,9 @@ export async function POST(request: NextRequest) {
       cusCity: shippingAddress.district,
       productName: `Perfume Order #${orderId}`,
       productCategory: "Fragrance",
-      successUrl: `${appUrl}/checkout/success?order_id=${orderId}`,
-      failUrl: `${appUrl}/checkout/cancel?order_id=${orderId}`,
-      cancelUrl: `${appUrl}/checkout/cancel?order_id=${orderId}`,
+      successUrl: `${appUrl}/api/orders/payment-callback?order_id=${orderId}&status=success`,
+      failUrl: `${appUrl}/api/orders/payment-callback?order_id=${orderId}&status=fail`,
+      cancelUrl: `${appUrl}/api/orders/payment-callback?order_id=${orderId}&status=cancel`,
       ipnUrl: `${appUrl}/api/orders/ipn`,
     })
 
