@@ -55,6 +55,7 @@ export interface SSLCommerzValidationResponse {
 
 export async function initiateSSLSession(
   params: SSLCommerzInitParams,
+  timeoutMs = 10000,
 ): Promise<SSLCommerzInitResponse> {
   const config = getConfig()
   const formData = new URLSearchParams()
@@ -85,19 +86,32 @@ export async function initiateSSLSession(
 
   const initUrl = `${getBaseUrl()}/gwprocess/v4/api.php`
 
-  const response = await fetch(initUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData.toString(),
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
 
-  if (!response.ok) {
-    throw new Error(`SSLCommerz API error: ${response.status}`)
+  try {
+    const response = await fetch(initUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      throw new Error(`SSLCommerz API error: ${response.status}`)
+    }
+
+    return response.json()
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("SSLCommerz initiation timed out")
+    }
+    throw error
+  } finally {
+    clearTimeout(timeout)
   }
-
-  return response.json()
 }
 
 export async function validateSSLTransaction(
