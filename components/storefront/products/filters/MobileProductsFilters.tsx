@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import type { Variants } from "motion/react"
 import { motion } from "motion/react"
 import ProductsFiltersBase, { FindScentButton } from "@/components/storefront/products/filters/ProductsFiltersBase"
@@ -64,7 +65,9 @@ export default function MobileProductsFilters() {
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <ProductsFiltersBase />
+              <Suspense fallback={<div className="h-48 animate-pulse rounded-lg bg-muted" />}>
+                <ProductsFiltersBase />
+              </Suspense>
             </motion.div>
           </motion.div>
           <div className="h-4" />
