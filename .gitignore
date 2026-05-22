@@ -22,6 +22,9 @@
 .DS_Store
 *.pem
 
+# order data (auto-generated)
+data/orders/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
