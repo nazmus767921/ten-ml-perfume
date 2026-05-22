@@ -37,6 +37,8 @@
 | **URL State** | nuqs | 2.8.9 |
 | **CSS Utilities** | tw-animate-css | 1.4.0 |
 | **Class Utilities** | clsx + tailwind-merge (via `cn()`) + class-variance-authority | — |
+| **Global State** | Zustand | 5.0.13 |
+| **Notifications** | Sonner | 2.0.7 |
 | **ID Generation** | nanoid | 5.1.11 |
 
 ---
@@ -321,8 +323,11 @@ RootLayout (app/layout.tsx)
 │           │   ├── Hamburger → MenuOverlay (fullscreen)
 │           │   ├── Logo (PhosphorLogoIcon + "10ML PERFUME")
 │           │   ├── TapButton[search, user]
-│           │   └── CartButton + Badge
-│           └── Page Content
+│           │   ├── CartButton + Badge
+│           │   └── BottomNavBar (mobile floating nav)
+│           ├── Page Content
+│           └── ConditionalFooter
+│               └── Footer (three-column: logo, social, legal)
 │               ├── Home → HeroSection
 │               │   ├── HeroLogoHeader (fluid headline)
 │               │   ├── BrandList (hover underline animation)
@@ -363,9 +368,11 @@ RootLayout (app/layout.tsx)
 
 | Component | File | Type | Description |
 |-----------|------|------|-------------|
-| `AppShell` | `storefront/layout/AppShell.tsx` | Server | Fixed wrapper: banner + navbar + spacer + children |
-| `NavBar` | `storefront/layout/NavBar.tsx` | Client | Navigation: hamburger, logo, actions, cart badge |
+| `AppShell` | `storefront/layout/AppShell.tsx` | Server | Fixed wrapper: banner + navbar + spacer + children + ConditionalFooter |
+| `NavBar` | `storefront/layout/NavBar.tsx` | Client | Navigation: hamburger, logo, actions, cart badge + BottomNavBar (mobile) |
 | `AnnouncementBanner` | `storefront/ui/AnnouncementBanner.tsx` | Client | Infinite marquee announcement strip |
+| `Footer` | `storefront/layout/Footer.tsx` | Server | Three-column footer: logo + description, social links, legal links |
+| `ConditionalFooter` | `storefront/layout/ConditionalFooter.tsx` | Client | Wrapper that excludes Footer from specific routes |
 
 #### Page Components
 
@@ -405,6 +412,7 @@ RootLayout (app/layout.tsx)
 | Component | Type | Description |
 |-----------|------|-------------|
 | `CartItem` | Client | Row: thumbnail, title/variant, QuantityInput, price, trash button |
+| `CartPageSkeleton` | Client | Loading skeleton shown during Zustand store hydration (`mounted` pattern) |
 
 #### Form Components
 
@@ -412,7 +420,7 @@ RootLayout (app/layout.tsx)
 |-----------|------|-------------|
 | `QuantityInput` | Client | Stepper: minus + number + plus, clamp on blur, InputGroup pattern |
 
-#### UI Primitives (shadcn/ui — 17 files in `components/ui/`)
+#### UI Primitives (shadcn/ui — 18 files in `components/ui/`)
 
 | Component | Variants | Key Features |
 |-----------|----------|--------------|
@@ -496,7 +504,7 @@ Mobile-first, with layout shifts at the following breakpoints:
 - `nuqs` (useQueryState) keeps filter selections in URL search params
 - Enables shareable/bookmarkable filter URLs
 - `useFiltersHook` abstracts the pattern with `setFilter`, `clearFilter`, `isFilterActive`, `hasActiveFilter`
-- Filter params: `perfumeFor`, `top`/`middle`/`base`, `brands`
+- Filter params: `for` (was `perfumeFor`), `top`/`middle`/`base`, `brands`
 
 ### 4. CVA (class-variance-authority) Pattern
 
@@ -576,9 +584,9 @@ cn("base-class", variant && "variant-class", className) // clsx + tailwind-merge
 
 - **Checkout flow**: Not yet implemented — will need form components, progress stepper, payment method cards
 - **Authentication**: Not yet implemented — will need login/signup modals or pages
-- **Footer**: Not yet implemented — placeholder for brand info, links, newsletter signup
-- **Empty states**: `Empty` component exists but not wired to actual empty data scenarios
-- **Skeleton loading**: Not yet implemented — `React.Suspense` boundaries exist in layout but no loading skeletons
+- **Footer**: **IMPLEMENTED** — Full three-column footer with logo, social links, legal links, copyright
+- **Empty states**: **Partially wired** — `Empty` component used in cart page, but may be needed elsewhere
+- **Skeleton loading**: **Partially implemented** — `CartPageSkeleton.tsx` exists for cart hydration, but route-level `loading.tsx` not yet implemented
 
 ---
 
