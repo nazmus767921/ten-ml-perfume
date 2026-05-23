@@ -6,25 +6,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCartStore } from "@/lib/stores/cart-store"
-import {
-  ListIcon,
-  MagnifyingGlassIcon,
-  PhosphorLogoIcon,
-  ShoppingCartSimpleIcon,
-  UserIcon,
-  XIcon,
-} from "@phosphor-icons/react"
+import { SearchModal } from "@/components/storefront/search/SearchModal"
+import { ListIcon, ShoppingCartSimpleIcon, UserIcon, XIcon } from "@phosphor-icons/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 const NAV_ACTION_BUTTONS = [
-  {
-    icon: <MagnifyingGlassIcon className="size-5" />,
-    href: "#",
-    ariaLabel: "Search products",
-  },
   {
     icon: <UserIcon className="size-5" />,
     href: "/account",
@@ -40,17 +29,7 @@ const MENU_LINK_ITEMS = [
   { text: "Trending", href: "/shop?trend='trending'" },
 ]
 
-const MenuOverlay = ({
-  open,
-  onClose,
-  onTap,
-  pathname,
-}: {
-  open: boolean
-  onTap?: () => void
-  onClose?: () => void
-  pathname?: string
-}) => {
+const MenuOverlay = ({ open, onClose, onTap, pathname }: { open: boolean; onTap?: () => void; onClose?: () => void; pathname?: string }) => {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden"
@@ -100,10 +79,7 @@ const MenuOverlay = ({
           >
             {MENU_LINK_ITEMS.map((item) => {
               const linkPath = item.href.split("?")[0]
-              const isActive =
-                linkPath === "/"
-                  ? pathname === "/"
-                  : pathname?.startsWith(linkPath)
+              const isActive = linkPath === "/" ? pathname === "/" : pathname?.startsWith(linkPath)
 
               return (
                 <motion.div
@@ -117,8 +93,8 @@ const MenuOverlay = ({
                 >
                   <TapButton
                     className={cn(
-                      "w-full py-10 md:py-16 text-2xl text-primary-foreground uppercase",
-                      isActive && "underline underline-offset-8 decoration-2"
+                      "w-full py-10 text-2xl text-primary-foreground uppercase md:py-16",
+                      isActive && "underline decoration-2 underline-offset-8"
                     )}
                     size="lg"
                     asChild
@@ -144,20 +120,11 @@ const Menu = ({ pathname }: { pathname?: string }) => {
 
   return (
     <>
-      <TapButton
-        aria-label="Open menu"
-        aria-expanded={isOpen}
-        onClick={handleOpen}
-      >
+      <TapButton aria-label="Open menu" aria-expanded={isOpen} onClick={handleOpen}>
         <ListIcon />
       </TapButton>
 
-      <MenuOverlay
-        open={isOpen}
-        onClose={handleClose}
-        onTap={handleClose}
-        pathname={pathname}
-      />
+      <MenuOverlay open={isOpen} onClose={handleClose} onTap={handleClose} pathname={pathname} />
     </>
   )
 }
@@ -168,7 +135,7 @@ const CartButton = () => {
   return (
     <Link href="/cart">
       <div className="relative z-1">
-        <Badge className="absolute z-1 top-1 right-1 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
+        <Badge className="absolute top-1 right-1 z-1 aspect-square rounded-full text-[0.6rem] ring-2 ring-primary outline outline-background">
           {totalItems}
         </Badge>
         <TapButton aria-label={`View cart, ${totalItems} items`}>
@@ -213,16 +180,17 @@ const BottomNavBar = () => {
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 shadow-lg shadow-black/20">
-        {NAV_ACTION_BUTTONS.map((btn) => (
-          <TapButton key={btn.ariaLabel} asChild aria-label={btn.ariaLabel} className="text-primary-foreground">
-            <Link href={btn.href}>{btn.icon}</Link>
-          </TapButton>
-        ))}
+        <SearchModal />
+        <TapButton key="account" asChild aria-label="Account" className="text-primary-foreground">
+          <Link href="/account">
+            <UserIcon className="size-5" />
+          </Link>
+        </TapButton>
         <div className="h-5 w-px bg-primary-foreground/20" />
         <Link href="/cart">
           <div className="relative">
             {totalItems > 0 && (
-              <Badge className="absolute top-2 right-1 ring-3 z-1 aspect-square rounded-full text-[0.55rem] bg-primary-foreground text-primary min-w-[18px] h-4.5 flex items-center justify-center px-1">
+              <Badge className="absolute top-2 right-1 z-1 flex aspect-square h-4.5 min-w-[18px] items-center justify-center rounded-full bg-primary-foreground px-1 text-[0.55rem] text-primary ring-3">
                 {totalItems}
               </Badge>
             )}
@@ -251,27 +219,28 @@ export default function NavBar() {
   return (
     <>
       <nav
-      className={cn(
-        "grid grid-cols-[1fr_auto_1fr] items-center h-(--navbar-height) w-full px-3 lg:px-8 border-b border-border bg-background transition-shadow duration-300",
-        isScrolled && "shadow-sm"
-      )}
-    >
-      <div className="flex items-center justify-self-start">
-        <Menu pathname={pathname} />
-      </div>
+        className={cn(
+          "grid h-(--navbar-height) w-full grid-cols-[1fr_auto_1fr] items-center border-b border-border bg-background px-3 transition-shadow duration-300 lg:px-8",
+          isScrolled && "shadow-sm"
+        )}
+      >
+        <div className="flex items-center justify-self-start">
+          <Menu pathname={pathname} />
+        </div>
 
-      <Link href="/" className="flex items-center justify-center" aria-label="Home">
-        <Logo />
-      </Link>
+        <Link href="/" className="flex items-center justify-center" aria-label="Home">
+          <Logo />
+        </Link>
 
-      <div className="hidden lg:flex items-center gap-1 justify-self-end">
-        {NAV_ACTION_BUTTONS.map((item) => (
-          <TapButton key={item.ariaLabel} asChild aria-label={item.ariaLabel}>
-            <Link href={item.href}>{item.icon}</Link>
-          </TapButton>
-        ))}
-        <CartButton />
-      </div>
+        <div className="hidden items-center gap-1 justify-self-end lg:flex">
+          <SearchModal />
+          {NAV_ACTION_BUTTONS.map((item) => (
+            <TapButton key={item.ariaLabel} asChild aria-label={item.ariaLabel}>
+              <Link href={item.href}>{item.icon}</Link>
+            </TapButton>
+          ))}
+          <CartButton />
+        </div>
       </nav>
       <BottomNavBar />
     </>
