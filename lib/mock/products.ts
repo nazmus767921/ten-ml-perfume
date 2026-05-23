@@ -4,6 +4,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 1,
     name: "Midnight Oud Eau de Parfum (100ml)",
+    brand: "Latafa",
+    notes: { top: ["Bergamot", "Pink Pepper"], heart: ["Rose", "Patchouli"], base: ["Oud", "Amber", "Musk"] },
+    category: "Unisex",
     originalPrice: 14500,
     price: 12500,
     badge: "sales",
@@ -24,6 +27,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 2,
     name: "Santal Intense Extrait de Parfum (50ml)",
+    brand: "Dunhill",
+    notes: { top: ["Lavender", "Bergamot"], heart: ["Sandalwood", "Cedar"], base: ["Vanilla", "Musk"] },
+    category: "Men",
     price: 18000,
     badge: "premium",
     outOfStock: true,
@@ -43,6 +49,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 3,
     name: "Néroli Blanc Bright Blossom (75ml)",
+    brand: "Chanel",
+    notes: { top: ["Mandarin Orange", "Lemon"], heart: ["Jasmine", "Rose"], base: ["Musk", "Cedar"] },
+    category: "Women",
     originalPrice: 9500,
     price: 8200,
     secondaryBadge: "new",
@@ -64,6 +73,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 4,
     name: "Rouge 540 Amber Floral Elegance",
+    brand: "Dior",
+    notes: { top: ["Saffron", "Pink Pepper"], heart: ["Jasmine", "Amber"], base: ["Cedar", "Musk"] },
+    category: "Unisex",
     price: 24000,
     badge: "premium",
     colors: [
@@ -82,6 +94,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 5,
     name: "Bleu de Select Refreshing Cologne (150ml)",
+    brand: "Chanel",
+    notes: { top: ["Lemon", "Mint"], heart: ["Ginger", "Nutmeg"], base: ["Cedar", "Amber"] },
+    category: "Men",
     originalPrice: 11000,
     price: 9900,
     badge: "sales",
@@ -101,6 +116,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 6,
     name: "Vanilla Absolute Unisex Oil Mist (30ml)",
+    brand: "Mont Black",
+    notes: { top: ["Vanilla"], heart: ["Tonka Bean"], base: ["Sandalwood", "Musk"] },
+    category: "Unisex",
     price: 4500,
     badge: "sales",
     colors: [{ value: "#f59e0b", label: "Warm Honey" }],
