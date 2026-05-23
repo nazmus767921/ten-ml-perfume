@@ -7,14 +7,12 @@ import type { ShippingAddress } from "@/lib/types/order"
 interface UserStore {
   user: UserProfile | null
   isAuthenticated: boolean
-  isLoading: boolean
   wishlist: (string | number)[]
   login: () => void
   logout: () => void
   updateProfile: (data: Partial<Pick<UserProfile, "name" | "email" | "phone">>) => void
   updateAddress: (address: ShippingAddress) => void
   toggleWishlist: (productId: string | number) => void
-  isInWishlist: (productId: string | number) => boolean
 }
 
 const MOCK_USER: UserProfile = {
@@ -35,7 +33,6 @@ const MOCK_USER: UserProfile = {
 export const useUserStore = create<UserStore>()((set, get) => ({
   user: MOCK_USER,
   isAuthenticated: true,
-  isLoading: false,
   wishlist: [1, 3],
   login: () => {
     set({ user: MOCK_USER, isAuthenticated: true })
@@ -60,8 +57,5 @@ export const useUserStore = create<UserStore>()((set, get) => ({
     } else {
       set({ wishlist: [...current, productId] })
     }
-  },
-  isInWishlist: (productId) => {
-    return get().wishlist.includes(productId)
   },
 }))
