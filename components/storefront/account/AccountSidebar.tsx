@@ -52,7 +52,7 @@ export default function AccountSidebar() {
       </nav>
 
       {/* Mobile nav */}
-      <nav aria-label="Account pages" className="flex overflow-x-auto border-b border-border lg:hidden">
+      <nav aria-label="Account pages" className="flex overflow-x-auto no-scrollbar border-b border-border lg:hidden">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isItemActive(item.href, pathname)
           return (
