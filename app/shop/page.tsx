@@ -24,19 +24,32 @@ const SortFilter = () => {
   )
 }
 
-export default function ShopPage() {
+interface ShopPageProps {
+  searchParams: Promise<{ q?: string }>
+}
+
+export default async function ShopPage({ searchParams }: ShopPageProps) {
+  const { q } = await searchParams
+  const query = (q ?? "").trim().toLowerCase()
+
+  const filtered = query ? MOCK_PRODUCTS.filter((p) => p.name.toLowerCase().includes(query) || p.brand?.toLowerCase().includes(query)) : MOCK_PRODUCTS
+
   return (
     <section className="container mx-auto flex min-h-(--page-height-safe) flex-col pb-4 lg:pt-4 lg:pb-8">
-      {/* BANNER  */}
-      <div className="mb-4 mt-3 px-3 py-6 bg-primary text-primary-foreground">
+      {/* BANNER */}
+      <div className="mt-3 mb-4 bg-primary px-3 py-6 text-primary-foreground">
         <span className="sr-only">Frontend design and developed by Nazmus Sakib - nazmus.dev.0@gmail.com.</span>
         <span className="sr-only">co-founder & full-stack developer Bohuvuj softwares</span>
-        <div className="text-3xl font-black tracking-tighter uppercase text-center">Banner will be placed here</div>
+        <div className="text-center text-3xl font-black tracking-tighter uppercase">Banner will be placed here</div>
       </div>
 
       {/* TITLE */}
       <div className="px-3">
-        <PageTitle icon={<ShoppingBagIcon />} title="Shop" subtitle="Smell Great, Feel Great." />
+        <PageTitle
+          icon={<ShoppingBagIcon />}
+          title={query ? `Search: "${q}"` : "Shop"}
+          subtitle={query ? `${filtered.length} results found` : "Smell Great, Feel Great."}
+        />
       </div>
 
       {/* Section wrapper */}
@@ -54,17 +67,24 @@ export default function ShopPage() {
         <div className="flex flex-col">
           {/* title */}
           <div className="flex items-center">
-            <div className="flex-1 text-sm tracking-wider text-muted-foreground/80 uppercase">Shown 256 items</div>
-
+            <div className="flex-1 text-sm tracking-wider text-muted-foreground/80 uppercase">
+              {query ? `${filtered.length} items` : "Shown 256 items"}
+            </div>
             <SortFilter />
           </div>
 
           {/* listing */}
-          <section className="mt-4 grid w-full flex-1 grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4">
-            {MOCK_PRODUCTS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </section>
+          {filtered.length > 0 ? (
+            <section className="mt-4 grid w-full flex-1 grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4">
+              {filtered.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </section>
+          ) : (
+            <div className="mt-10 flex flex-1 items-center justify-center">
+              <p className="text-sm text-muted-foreground">No products found matching &quot;{q}&quot;</p>
+            </div>
+          )}
         </div>
       </section>
     </section>
