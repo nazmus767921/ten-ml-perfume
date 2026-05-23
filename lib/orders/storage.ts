@@ -11,9 +11,7 @@ function canUseBlob(): boolean {
   return !!process.env.BLOB_READ_WRITE_TOKEN
 }
 
-async function streamToText(
-  stream: ReadableStream<Uint8Array>,
-): Promise<string> {
+async function streamToText(stream: ReadableStream<Uint8Array>): Promise<string> {
   const reader = stream.getReader()
   const decoder = new TextDecoder()
   let result = ""
@@ -56,10 +54,7 @@ export async function getOrder(id: string): Promise<Order | null> {
   return memStore.get(id) ?? null
 }
 
-export async function updateOrder(
-  id: string,
-  updates: Partial<Order>,
-): Promise<Order | null> {
+export async function updateOrder(id: string, updates: Partial<Order>): Promise<Order | null> {
   const order = await getOrder(id)
   if (!order) return null
   const updated = { ...order, ...updates, updatedAt: new Date().toISOString() }
@@ -78,21 +73,15 @@ export async function listOrders(): Promise<Order[]> {
           if (!result || !result.stream) continue
           const text = await streamToText(result.stream)
           orders.push(JSON.parse(text) as Order)
-        } catch {
-        }
+        } catch {}
       }
-      orders.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      )
+      orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return orders
     } catch {
       return []
     }
   }
   const orders = Array.from(memStore.values())
-  orders.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  )
+  orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
   return orders
 }

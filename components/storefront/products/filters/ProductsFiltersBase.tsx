@@ -29,7 +29,7 @@ export default function ProductsFiltersBase() {
 export const FindScentButton = () => {
   return (
     <Button type="submit" size={"lg"} className="w-full text-lg">
-      <MagnifyingGlassIcon className="size-5"/> Find
+      <MagnifyingGlassIcon className="size-5" /> Find
     </Button>
   )
 }

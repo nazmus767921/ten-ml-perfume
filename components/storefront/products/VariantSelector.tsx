@@ -12,16 +12,10 @@ interface VariantSelectorProps {
 
 const FALLBACK_VARIANTS = [3, 5, 6, 10, 15, 30]
 
-export default function VariantSelector({
-  variants,
-  selectedMl: controlledMl,
-  onMlChange,
-}: VariantSelectorProps) {
+export default function VariantSelector({ variants, selectedMl: controlledMl, onMlChange }: VariantSelectorProps) {
   const isControlled = controlledMl !== undefined && onMlChange !== undefined
 
-  const [internalMl, setInternalMl] = useState<number | null>(
-    variants?.[0]?.ml ?? FALLBACK_VARIANTS[0],
-  )
+  const [internalMl, setInternalMl] = useState<number | null>(variants?.[0]?.ml ?? FALLBACK_VARIANTS[0])
 
   const selectedMl = isControlled ? controlledMl : internalMl
 
@@ -33,9 +27,7 @@ export default function VariantSelector({
     }
   }
 
-  const variantLabels = variants
-    ? variants.map((v) => v.ml)
-    : FALLBACK_VARIANTS
+  const variantLabels = variants ? variants.map((v) => v.ml) : FALLBACK_VARIANTS
 
   return (
     <div className="flex flex-col gap-2">
@@ -45,12 +37,7 @@ export default function VariantSelector({
         {variantLabels.map((ml) => {
           const isSelected = selectedMl === ml
           return (
-            <Button
-              key={ml}
-              variant={isSelected ? "default" : "outline"}
-              onClick={() => handleSelect(ml)}
-              size={"lg"}
-            >
+            <Button key={ml} variant={isSelected ? "default" : "outline"} onClick={() => handleSelect(ml)} size={"lg"}>
               <span className="text-sm">{ml}ml</span>
             </Button>
           )

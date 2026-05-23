@@ -39,9 +39,7 @@ export const MOCK_ORDERS: Order[] = [
       area: "Banani",
       streetAddress: "456 Lake View Road",
     },
-    items: [
-      { productId: 4, name: "Rouge 540 Amber Floral Elegance", imageUrl: "", ml: 15, price: 9500, quantity: 1 },
-    ],
+    items: [{ productId: 4, name: "Rouge 540 Amber Floral Elegance", imageUrl: "", ml: 15, price: 9500, quantity: 1 }],
     subtotal: 9500,
     shipping: 0,
     total: 9500,
@@ -62,9 +60,7 @@ export const MOCK_ORDERS: Order[] = [
       area: "Gulshan",
       streetAddress: "123 Fragrance Lane, Apt 4B",
     },
-    items: [
-      { productId: 5, name: "Bleu de Select Refreshing Cologne", imageUrl: "", ml: 30, price: 5500, quantity: 1 },
-    ],
+    items: [{ productId: 5, name: "Bleu de Select Refreshing Cologne", imageUrl: "", ml: 30, price: 5500, quantity: 1 }],
     subtotal: 5500,
     shipping: 200,
     total: 5700,

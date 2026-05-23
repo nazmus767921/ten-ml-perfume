@@ -17,9 +17,7 @@ export default function WishlistGrid() {
           <HeartIcon className="size-8" />
           <EmptyTitle>Your wishlist is empty</EmptyTitle>
         </EmptyHeader>
-        <EmptyDescription>
-          Save your favorite scents by tapping the heart icon on any product.
-        </EmptyDescription>
+        <EmptyDescription>Save your favorite scents by tapping the heart icon on any product.</EmptyDescription>
       </Empty>
     )
   }

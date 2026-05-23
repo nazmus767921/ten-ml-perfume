@@ -37,7 +37,7 @@ export default function OrderHistoryList() {
         <Card key={order.id} size="sm">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span className="text-xs font-mono text-muted-foreground">{order.id}</span>
+              <span className="font-mono text-xs text-muted-foreground">{order.id}</span>
               <span className="text-xs text-muted-foreground">
                 {new Date(order.createdAt).toLocaleDateString("en-BD", {
                   year: "numeric",
@@ -56,9 +56,7 @@ export default function OrderHistoryList() {
                 <Badge variant="outline" className={PAYMENT_COLORS[order.paymentStatus]}>
                   {order.paymentStatus}
                 </Badge>
-                <Badge variant="outline">
-                  {order.paymentMethod === "sslcommerz" ? "Card" : "COD"}
-                </Badge>
+                <Badge variant="outline">{order.paymentMethod === "sslcommerz" ? "Card" : "COD"}</Badge>
               </div>
               <div className="flex flex-col gap-1">
                 {order.items.map((item) => (

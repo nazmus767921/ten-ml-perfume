@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { nanoid } from "nanoid"
-import type {
-  CreateOrderRequest,
-  CreateOrderResponse,
-  Order,
-} from "@/lib/types/order"
+import type { CreateOrderRequest, CreateOrderResponse, Order } from "@/lib/types/order"
 import { saveOrder, updateOrder } from "@/lib/orders/storage"
 import { initiateSSLSession } from "@/lib/sslcommerz/client"
 
@@ -13,62 +9,37 @@ const STANDARD_SHIPPING = 200
 
 export async function POST(request: NextRequest) {
   try {
-    const body: CreateOrderRequest & { items?: Order["items"] } =
-      await request.json()
+    const body: CreateOrderRequest & { items?: Order["items"] } = await request.json()
 
     const { paymentMethod, shippingAddress, items } = body
 
     // ── Validation ─────────────────────────────────────────────
     if (!paymentMethod || !["sslcommerz", "cod"].includes(paymentMethod)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid payment method" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Invalid payment method" }, { status: 400 })
     }
 
     if (!shippingAddress?.fullName?.trim()) {
-      return NextResponse.json(
-        { success: false, error: "Full name is required" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Full name is required" }, { status: 400 })
     }
 
     if (!shippingAddress?.phoneNumber?.trim()) {
-      return NextResponse.json(
-        { success: false, error: "Phone number is required" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Phone number is required" }, { status: 400 })
     }
 
     if (!shippingAddress?.email?.includes("@")) {
-      return NextResponse.json(
-        { success: false, error: "Valid email is required" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Valid email is required" }, { status: 400 })
     }
 
-    if (
-      !shippingAddress?.district?.trim() ||
-      !shippingAddress?.area?.trim()
-    ) {
-      return NextResponse.json(
-        { success: false, error: "District and area are required" },
-        { status: 400 },
-      )
+    if (!shippingAddress?.district?.trim() || !shippingAddress?.area?.trim()) {
+      return NextResponse.json({ success: false, error: "District and area are required" }, { status: 400 })
     }
 
     if (!shippingAddress?.streetAddress?.trim()) {
-      return NextResponse.json(
-        { success: false, error: "Street address is required" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Street address is required" }, { status: 400 })
     }
 
     if (!items || items.length === 0) {
-      return NextResponse.json(
-        { success: false, error: "Cart is empty" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "Cart is empty" }, { status: 400 })
     }
 
     // ── Create Order ───────────────────────────────────────────
@@ -131,7 +102,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: sslResult.failedreason || "Payment initialization failed",
         },
-        { status: 502 },
+        { status: 502 }
       )
     }
 
@@ -144,9 +115,6 @@ export async function POST(request: NextRequest) {
     } satisfies CreateOrderResponse)
   } catch (error) {
     console.error("Order creation error:", error)
-    return NextResponse.json(
-      { success: false, error: "Internal server error" },
-      { status: 500 },
-    )
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
 }

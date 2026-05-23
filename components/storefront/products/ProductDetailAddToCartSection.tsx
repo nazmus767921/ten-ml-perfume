@@ -13,14 +13,10 @@ interface ProductDetailAddToCartSectionProps {
   product: Product
 }
 
-export default function ProductDetailAddToCartSection({
-  product,
-}: ProductDetailAddToCartSectionProps) {
+export default function ProductDetailAddToCartSection({ product }: ProductDetailAddToCartSectionProps) {
   const addItem = useCartStore((s) => s.addItem)
   const mlVariants = product.mlVariants ?? []
-  const [selectedMl, setSelectedMl] = useState<number | null>(
-    mlVariants.length > 0 ? mlVariants[0].ml : null,
-  )
+  const [selectedMl, setSelectedMl] = useState<number | null>(mlVariants.length > 0 ? mlVariants[0].ml : null)
 
   const selectedVariant = mlVariants.find((v) => v.ml === selectedMl)
 
@@ -41,11 +37,7 @@ export default function ProductDetailAddToCartSection({
   return (
     <>
       <div className="mt-6">
-        <VariantSelector
-          variants={mlVariants.length > 0 ? mlVariants : undefined}
-          selectedMl={selectedMl}
-          onMlChange={setSelectedMl}
-        />
+        <VariantSelector variants={mlVariants.length > 0 ? mlVariants : undefined} selectedMl={selectedMl} onMlChange={setSelectedMl} />
       </div>
 
       <div className="mt-6 flex w-full gap-2">

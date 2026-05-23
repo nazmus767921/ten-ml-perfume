@@ -42,3 +42,5 @@ next-env.d.ts
 /.sisyphus/
 .vercel
 .env*
+
+certificates

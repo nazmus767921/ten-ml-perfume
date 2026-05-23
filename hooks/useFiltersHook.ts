@@ -7,20 +7,15 @@ type AllowedUrlTypes = string | number | boolean | string[] | number[] | null
 interface UseUrlFilterOptions<T extends AllowedUrlTypes> {
   key: string
   defaultValue: T
-  parser?: any 
+  parser?: any
 }
 
-export function useUrlFilter<T extends AllowedUrlTypes>({ 
-  key, 
-  defaultValue, 
-  parser 
-}: UseUrlFilterOptions<T>) {
-  
+export function useUrlFilter<T extends AllowedUrlTypes>({ key, defaultValue, parser }: UseUrlFilterOptions<T>) {
   const [queryState, setQueryState] = useQueryState<T>(key, {
     clearOnDefault: true,
     defaultValue,
     ...(parser ? { parse: parser.parse, serialize: parser.serialize } : {}),
-  } as any) 
+  } as any)
 
   const nuqsOptions: Options = { shallow: true }
 

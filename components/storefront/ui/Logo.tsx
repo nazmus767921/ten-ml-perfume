@@ -1,7 +1,5 @@
 import { PhosphorLogoIcon } from "@phosphor-icons/react/dist/ssr"
 
-
-
 export default function Logo() {
   return (
     <div className="flex items-center justify-center">
@@ -11,9 +9,7 @@ export default function Logo() {
           <span className="font-body -mt-0.5 text-[18px] leading-none font-bold tracking-[1.5px] text-black md:text-[22px] md:tracking-[2px]">
             10ML
           </span>
-          <span className="font-logo-script -mt-0.5 text-[14px] leading-none text-black uppercase md:text-[16px]">
-            perfume
-          </span>
+          <span className="font-logo-script -mt-0.5 text-[14px] leading-none text-black uppercase md:text-[16px]">perfume</span>
         </div>
       </div>
     </div>

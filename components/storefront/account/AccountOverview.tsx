@@ -55,7 +55,7 @@ export default function AccountOverview() {
       <Separator />
 
       <div>
-        <h2 className="mb-3 text-sm font-semibold tracking-widest uppercase text-muted-foreground">Profile</h2>
+        <h2 className="mb-3 text-sm font-semibold tracking-widest text-muted-foreground uppercase">Profile</h2>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 text-sm">
             <span className="w-20 text-muted-foreground">Name</span>

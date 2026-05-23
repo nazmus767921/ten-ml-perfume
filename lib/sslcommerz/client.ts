@@ -14,9 +14,7 @@ function getConfig(): SSLCommerzConfig {
 
 function getBaseUrl(): string {
   const config = getConfig()
-  return config.isSandbox
-    ? "https://sandbox.sslcommerz.com"
-    : "https://securepay.sslcommerz.com"
+  return config.isSandbox ? "https://sandbox.sslcommerz.com" : "https://securepay.sslcommerz.com"
 }
 
 export interface SSLCommerzInitParams {
@@ -53,10 +51,7 @@ export interface SSLCommerzValidationResponse {
   error?: string
 }
 
-export async function initiateSSLSession(
-  params: SSLCommerzInitParams,
-  timeoutMs = 3000,
-): Promise<SSLCommerzInitResponse> {
+export async function initiateSSLSession(params: SSLCommerzInitParams, timeoutMs = 3000): Promise<SSLCommerzInitResponse> {
   const config = getConfig()
   const formData = new URLSearchParams()
   formData.append("store_id", config.storeId)
@@ -94,9 +89,7 @@ export async function initiateSSLSession(
       },
       body: formData.toString(),
     }),
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("SSLCommerz initiation timed out")), timeoutMs),
-    ),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error("SSLCommerz initiation timed out")), timeoutMs)),
   ])
 
   if (!response.ok) {
@@ -106,10 +99,7 @@ export async function initiateSSLSession(
   return response.json() as Promise<SSLCommerzInitResponse>
 }
 
-export async function validateSSLTransaction(
-  valId: string,
-  timeoutMs = 5000,
-): Promise<SSLCommerzValidationResponse> {
+export async function validateSSLTransaction(valId: string, timeoutMs = 5000): Promise<SSLCommerzValidationResponse> {
   const config = getConfig()
   const url = new URL(`${getBaseUrl()}/validator/api/validationserverAPI.php`)
   url.searchParams.set("val_id", valId)
@@ -120,9 +110,7 @@ export async function validateSSLTransaction(
 
   const response = await Promise.race([
     fetch(url.toString()),
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("SSLCommerz validation timed out")), timeoutMs),
-    ),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error("SSLCommerz validation timed out")), timeoutMs)),
   ])
 
   if (!response.ok) {

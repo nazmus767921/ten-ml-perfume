@@ -1,12 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import {
-  HouseIcon,
-  ShoppingBagIcon,
-  HeartIcon,
-  GearSixIcon,
-} from "@phosphor-icons/react"
+import { HouseIcon, ShoppingBagIcon, HeartIcon, GearSixIcon } from "@phosphor-icons/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -17,8 +12,7 @@ const SIDEBAR_ITEMS = [
   { icon: <GearSixIcon className="size-5" />, label: "Settings", href: "/account/settings" },
 ]
 
-const isItemActive = (href: string, pathname: string) =>
-  href === "/account" ? pathname === "/account" : pathname.startsWith(href)
+const isItemActive = (href: string, pathname: string) => (href === "/account" ? pathname === "/account" : pathname.startsWith(href))
 
 export default function AccountSidebar() {
   const pathname = usePathname()
@@ -27,9 +21,7 @@ export default function AccountSidebar() {
     <>
       {/* Desktop sidebar */}
       <nav aria-label="Account navigation" className="hidden w-56 shrink-0 flex-col gap-1 lg:flex">
-        <h2 className="mb-4 px-3 text-xs font-semibold tracking-widest uppercase text-muted-foreground">
-          My Account
-        </h2>
+        <h2 className="mb-4 px-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase">My Account</h2>
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isItemActive(item.href, pathname)
           return (
@@ -39,9 +31,7 @@ export default function AccountSidebar() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-none px-3 py-2.5 text-sm transition-colors duration-200",
-                isActive
-                  ? "bg-primary text-primary-foreground font-medium"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                isActive ? "bg-primary font-medium text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
               {item.icon}
@@ -52,7 +42,7 @@ export default function AccountSidebar() {
       </nav>
 
       {/* Mobile nav */}
-      <nav aria-label="Account pages" className="flex overflow-x-auto no-scrollbar border-b border-border lg:hidden">
+      <nav aria-label="Account pages" className="no-scrollbar flex overflow-x-auto border-b border-border lg:hidden">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isItemActive(item.href, pathname)
           return (
@@ -62,9 +52,7 @@ export default function AccountSidebar() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-xs font-medium transition-colors duration-200",
-                isActive
-                  ? "border-primary text-foreground"
-                  : "border-transparent text-muted-foreground hover:text-foreground",
+                isActive ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"
               )}
             >
               {item.icon}

@@ -5,13 +5,8 @@ interface StarRatingProps {
 }
 
 export default function StarRating({ value }: StarRatingProps) {
- 
   return (
-    <div
-      className="flex items-center gap-1"
-      role="radiogroup"
-      aria-label="Select rating"
-    >
+    <div className="flex items-center gap-1" role="radiogroup" aria-label="Select rating">
       {[1, 2, 3, 4, 5].map((i) => (
         <button
           key={i}
@@ -21,7 +16,7 @@ export default function StarRating({ value }: StarRatingProps) {
           aria-label={`${i} star${i > 1 ? "s" : ""}`}
           className="transition-transform hover:scale-110 focus:outline-none"
         >
-          <StarIcon weight={i <=   value? "fill": 'regular'} className="size-3.5 lg:size-4 text-yellow-300" />
+          <StarIcon weight={i <= value ? "fill" : "regular"} className="size-3.5 text-yellow-300 lg:size-4" />
         </button>
       ))}
     </div>

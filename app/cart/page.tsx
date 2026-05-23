@@ -6,36 +6,13 @@ import CartPageSkeleton from "@/components/storefront/cart/CartPageSkeleton"
 import PageTitle from "@/components/storefront/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemGroup,
-  ItemTitle,
-} from "@/components/ui/item"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import { Item, ItemActions, ItemContent, ItemGroup, ItemTitle } from "@/components/ui/item"
 import { Separator } from "@/components/ui/separator"
 import { TakaFormatter } from "@/lib/utils"
 import { useCartStore } from "@/lib/stores/cart-store"
-import {
-  ArrowRightIcon,
-  CaretDown,
-  Lock,
-  ShoppingCartIcon,
-  ShoppingCartSimpleIcon,
-} from "@phosphor-icons/react"
+import { ArrowRightIcon, CaretDown, Lock, ShoppingCartIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "motion/react"
 import Link from "next/link"
 
@@ -48,9 +25,7 @@ const STANDARD_SHIPPING = 200
 const SummaryItem = ({ title, value }: { title: string; value: string }) => (
   <Item size={"xs"} className="py-0.5">
     <ItemContent>
-      <ItemTitle className="text-sm text-muted-foreground/80 capitalize">
-        {title}
-      </ItemTitle>
+      <ItemTitle className="text-sm text-muted-foreground/80 capitalize">{title}</ItemTitle>
     </ItemContent>
     <ItemActions>
       <span className="text-sm">{value}</span>
@@ -108,11 +83,7 @@ function CartPage() {
   return (
     <section className="container mx-auto flex min-h-(--page-height-safe) flex-col pb-4 lg:pt-4 lg:pb-8">
       <div className="px-3">
-        <PageTitle
-          icon={<ShoppingCartIcon />}
-          title="Cart"
-          subtitle="Thank you for choosing our service"
-        />
+        <PageTitle icon={<ShoppingCartIcon />} title="Cart" subtitle="Thank you for choosing our service" />
       </div>
 
       {items.length === 0 ? (
@@ -122,9 +93,7 @@ function CartPage() {
           </EmptyMedia>
           <EmptyHeader>
             <EmptyTitle>Your cart is empty</EmptyTitle>
-            <EmptyDescription>
-              Looks like you haven&apos;t added anything to your cart yet.
-            </EmptyDescription>
+            <EmptyDescription>Looks like you haven&apos;t added anything to your cart yet.</EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             <Button asChild>
@@ -144,11 +113,7 @@ function CartPage() {
           <div className="min-h-64 w-full lg:hidden" />
           <div className="relative w-full">
             <div className="fixed bottom-4 mt-auto w-full px-3 lg:sticky lg:top-[calc(var(--navbar-height)+5rem)] lg:bottom-auto lg:my-0 lg:px-0">
-              <Collapsible
-                open={summaryOpen}
-                onOpenChange={handleToggle}
-                className="w-full max-w-xl"
-              >
+              <Collapsible open={summaryOpen} onOpenChange={handleToggle} className="w-full max-w-xl">
                 <Card className="bg-background/80 backdrop-blur-2xl">
                   <CollapsibleTrigger asChild>
                     <CardHeader className="cursor-pointer select-none">
@@ -162,16 +127,11 @@ function CartPage() {
                               className="text-xs font-normal text-muted-foreground/70"
                             >
                               {TakaFormatter.format(cartTotal)} Total
-                              {shipping === 0
-                                ? " \u2022 Free Shipping"
-                                : ` \u2022 +${TakaFormatter.format(shipping)} shipping`}
+                              {shipping === 0 ? " \u2022 Free Shipping" : ` \u2022 +${TakaFormatter.format(shipping)} shipping`}
                             </motion.span>
                           )}
                         </span>
-                        <motion.div
-                          animate={{ rotate: summaryOpen ? -180 : 0 }}
-                          transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-                        >
+                        <motion.div animate={{ rotate: summaryOpen ? -180 : 0 }} transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}>
                           <CaretDown className="size-4 text-muted-foreground/70" />
                         </motion.div>
                       </CardTitle>
@@ -192,18 +152,8 @@ function CartPage() {
                             <div className="h-1 w-10 rounded-full bg-muted-foreground/20" />
                           </div>
                           <ItemGroup className="gap-0">
-                            <SummaryItem
-                              title="Subtotal"
-                              value={TakaFormatter.format(cartSubtotalTotal)}
-                            />
-                            <SummaryItem
-                              title="Shipping"
-                              value={
-                                shipping === 0
-                                  ? "Free"
-                                  : TakaFormatter.format(shipping)
-                              }
-                            />
+                            <SummaryItem title="Subtotal" value={TakaFormatter.format(cartSubtotalTotal)} />
+                            <SummaryItem title="Shipping" value={shipping === 0 ? "Free" : TakaFormatter.format(shipping)} />
                           </ItemGroup>
                           {shipping > 0 && (
                             <div className="mt-3 mb-2">
@@ -237,9 +187,7 @@ function CartPage() {
                         </ItemTitle>
                       </ItemContent>
                       <ItemActions>
-                        <span className="text-lg font-bold">
-                          {TakaFormatter.format(cartTotal)}
-                        </span>
+                        <span className="text-lg font-bold">{TakaFormatter.format(cartTotal)}</span>
                       </ItemActions>
                     </Item>
                     <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/50">

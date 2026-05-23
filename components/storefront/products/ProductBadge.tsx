@@ -1,8 +1,8 @@
-type BadgeVariant = "sales" | "premium" | "new";
+type BadgeVariant = "sales" | "premium" | "new"
 
 interface ProductBadgeProps {
-  variant: BadgeVariant;
-  className?: string;
+  variant: BadgeVariant
+  className?: string
 }
 
 const badgeConfig: Record<BadgeVariant, { label: string; className: string }> = {
@@ -18,13 +18,9 @@ const badgeConfig: Record<BadgeVariant, { label: string; className: string }> = 
     label: "NEW",
     className: "bg-white text-foreground text-xs font-bold tracking-wide px-1.5 py-0.5",
   },
-};
+}
 
 export default function ProductBadge({ variant, className = "" }: ProductBadgeProps) {
-  const config = badgeConfig[variant];
-  return (
-    <span className={`inline-block ${config.className} ${className}`}>
-      {config.label}
-    </span>
-  );
+  const config = badgeConfig[variant]
+  return <span className={`inline-block ${config.className} ${className}`}>{config.label}</span>
 }

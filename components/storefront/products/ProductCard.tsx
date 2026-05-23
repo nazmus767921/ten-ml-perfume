@@ -23,9 +23,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const isAddToCartDisabled = isOutOfStock
 
   const mlVariants = product.mlVariants ?? []
-  const [selectedMl, setSelectedMl] = useState<number | null>(
-    mlVariants.length > 0 ? mlVariants[0].ml : null,
-  )
+  const [selectedMl, setSelectedMl] = useState<number | null>(mlVariants.length > 0 ? mlVariants[0].ml : null)
 
   const selectedVariant = mlVariants.find((v) => v.ml === selectedMl) ?? null
   const displayPrice = selectedVariant?.price ?? product.price
@@ -76,10 +74,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       </Link>
       {/* content */}
-      <div className="pt-1 pb-4 flex flex-col">
+      <div className="flex flex-col pt-1 pb-4">
         <div className="px-1">
           <StarRating value={4} />
-          <h3 className="mt-1 text-base leading-5 font-bold tracking-tighter md:text-lg line-clamp-2">{product.name}</h3>
+          <h3 className="mt-1 line-clamp-2 text-base leading-5 font-bold tracking-tighter md:text-lg">{product.name}</h3>
         </div>
 
         {/* ML variant badges — interactive */}

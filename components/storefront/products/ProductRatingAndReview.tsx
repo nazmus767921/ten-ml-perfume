@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 import { Button } from "@/components/ui/button"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import Image from "next/image"
@@ -57,14 +50,7 @@ interface StarIconProps {
 
 function StarIcon({ filled = true, size = 18 }: StarIconProps) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 20 20"
-      fill={filled ? "#F5A623" : "#E5E7EB"}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
+    <svg width={size} height={size} viewBox="0 0 20 20" fill={filled ? "#F5A623" : "#E5E7EB"} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78L10 1z" />
     </svg>
   )
@@ -77,10 +63,7 @@ interface StarRowProps {
 
 function StarRow({ rating, size = 18 }: StarRowProps) {
   return (
-    <div
-      className="flex items-center gap-1"
-      aria-label={`${rating} out of 5 stars`}
-    >
+    <div className="flex items-center gap-1" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <StarIcon key={i} filled={i <= rating} size={size} />
       ))}
@@ -98,11 +81,7 @@ interface StarPickerProps {
 function StarPicker({ value, onChange }: StarPickerProps) {
   const [hovered, setHovered] = useState(0)
   return (
-    <div
-      className="flex items-center gap-1"
-      role="radiogroup"
-      aria-label="Select rating"
-    >
+    <div className="flex items-center gap-1" role="radiogroup" aria-label="Select rating">
       {[1, 2, 3, 4, 5].map((i) => (
         <button
           key={i}
@@ -136,10 +115,7 @@ function RatingBar({ star, count, max }: RatingBreakdown & { max: number }) {
       <span className="w-2 text-sm text-gray-700">{star}</span>
       {/* FIX: removed flex-1 from bar column — use explicit w here instead */}
       <div className="h-1.5 w-32 overflow-hidden bg-gray-200 sm:w-40">
-        <div
-          className="h-full bg-gray-900 transition-all duration-500"
-          style={{ width: `${pct}%` }}
-        />
+        <div className="h-full bg-gray-900 transition-all duration-500" style={{ width: `${pct}%` }} />
       </div>
     </div>
   )
@@ -160,9 +136,7 @@ function RatingSummaryPanel({ summary }: RatingSummaryPanelProps) {
           </p>
           <p className="mb-1 ml-2 text-sm text-gray-500">/ 5</p>
         </div>
-        <p className="mt-2 text-sm text-gray-500">
-          ({summary.total} New Reviews)
-        </p>
+        <p className="mt-2 text-sm text-gray-500">({summary.total} New Reviews)</p>
       </div>
 
       {/* Bar breakdown — explicit width, no flex-1 */}
@@ -187,30 +161,18 @@ function ReviewCard({ review }: ReviewCardProps) {
       {/* Header row: name + date */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <p className="text-sm leading-tight font-semibold text-gray-900">
-            {review.name}
-          </p>
+          <p className="text-sm leading-tight font-semibold text-gray-900">{review.name}</p>
           <StarRow rating={review.rating} size={14} />
         </div>
-        <span className="shrink-0 pt-0.5 text-xs whitespace-nowrap text-gray-400">
-          {review.date}
-        </span>
+        <span className="shrink-0 pt-0.5 text-xs whitespace-nowrap text-gray-400">{review.date}</span>
       </div>
 
       {/* Body */}
-      <p className="flex-1 text-sm leading-relaxed text-gray-500">
-        &ldquo;{review.body}&rdquo;
-      </p>
+      <p className="flex-1 text-sm leading-relaxed text-gray-500">&ldquo;{review.body}&rdquo;</p>
 
       {/* Footer: avatar + name + verified badge */}
       <div className="flex items-center gap-2.5 border-t border-border pt-2">
-        <Image
-          src={review.avatarUrl}
-          alt={review.name}
-          width={36}
-          height={36}
-          className="h-9 w-9 shrink-0 rounded-full object-cover"
-        />
+        <Image src={review.avatarUrl} alt={review.name} width={36} height={36} className="h-9 w-9 shrink-0 rounded-full object-cover" />
         <div>
           <p className="text-xs font-medium text-gray-700">{review.name}</p>
           <p className="text-xs text-gray-400">Verified Buyer</p>
@@ -231,10 +193,7 @@ function ProgressIndicator({ total, activeIndex }: ProgressIndicatorProps) {
   const segmentWidth = 100 / total
   return (
     <div className="mt-4 h-[3px] w-[160px] overflow-hidden bg-gray-200 sm:w-[200px]">
-      <div
-        className="h-full bg-gray-900 transition-all duration-300"
-        style={{ width: `${segmentWidth * (activeIndex + 1)}%` }}
-      />
+      <div className="h-full bg-gray-900 transition-all duration-300" style={{ width: `${segmentWidth * (activeIndex + 1)}%` }} />
     </div>
   )
 }
@@ -249,9 +208,7 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
   const [name, setName] = useState("")
   const [rating, setRating] = useState(0)
   const [body, setBody] = useState("")
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle")
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [error, setError] = useState("")
 
   const handleSubmit = async () => {
@@ -286,16 +243,9 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
     return (
       <div className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-card p-6 text-center">
         <span className="text-2xl">🎉</span>
-        <p className="text-sm font-semibold text-gray-900">
-          Thank you for your review!
-        </p>
-        <p className="text-xs text-gray-400">
-          Your feedback helps other shoppers.
-        </p>
-        <button
-          onClick={() => setStatus("idle")}
-          className="mt-2 text-xs text-gray-500 underline underline-offset-2"
-        >
+        <p className="text-sm font-semibold text-gray-900">Thank you for your review!</p>
+        <p className="text-xs text-gray-400">Your feedback helps other shoppers.</p>
+        <button onClick={() => setStatus("idle")} className="mt-2 text-xs text-gray-500 underline underline-offset-2">
           Write another
         </button>
       </div>
@@ -307,10 +257,7 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
       <p className="text-sm font-semibold text-gray-900">Write a Review</p>
 
       <div className="flex flex-col gap-1.5">
-        <label
-          className="text-xs font-medium text-gray-600"
-          htmlFor="review-name"
-        >
+        <label className="text-xs font-medium text-gray-600" htmlFor="review-name">
           Your name
         </label>
         <input
@@ -329,10 +276,7 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label
-          className="text-xs font-medium text-gray-600"
-          htmlFor="review-body"
-        >
+        <label className="text-xs font-medium text-gray-600" htmlFor="review-body">
           Review
         </label>
         <textarea
@@ -347,12 +291,7 @@ function WriteReviewForm({ onSubmit }: WriteReviewFormProps) {
 
       {error && <p className="text-xs text-red-500">{error}</p>}
 
-      <Button
-      size={'sm'}
-        onClick={handleSubmit}
-        disabled={status === "loading"}
-        className="w-full"
-      >
+      <Button size={"sm"} onClick={handleSubmit} disabled={status === "loading"} className="w-full">
         {status === "loading" ? "Submitting…" : "Submit Review"}
       </Button>
     </div>
@@ -367,11 +306,7 @@ export interface RatingAndReviewsProps {
   onSubmitReview?: (payload: WriteReviewPayload) => Promise<void> | void
 }
 
-export default function RatingAndReviews({
-  summary,
-  reviews,
-  onSubmitReview,
-}: RatingAndReviewsProps) {
+export default function RatingAndReviews({ summary, reviews, onSubmitReview }: RatingAndReviewsProps) {
   const handleSubmitReview = onSubmitReview ?? (async () => {})
   const [api, setApi] = useState<CarouselApi>()
   const [activeReviewIndex, setActiveReviewIndex] = useState(0)
@@ -402,9 +337,7 @@ export default function RatingAndReviews({
       <div className="flex flex-col items-start gap-8 md:flex-row md:gap-12">
         {/* Left — summary */}
         <div className="w-full shrink-0 md:w-auto">
-          <h2 className="mb-5 text-center text-xl font-semibold text-gray-900 lg:text-start">
-            Rating &amp; Reviews
-          </h2>
+          <h2 className="mb-5 text-center text-xl font-semibold text-gray-900 lg:text-start">Rating &amp; Reviews</h2>
           <RatingSummaryPanel summary={summary} />
         </div>
 
@@ -436,10 +369,7 @@ export default function RatingAndReviews({
 
           {/* Progress bar + x/n counter on mobile */}
           <div className="mt-1 flex items-center gap-3 px-4 md:px-0">
-            <ProgressIndicator
-              total={reviews.length}
-              activeIndex={activeReviewIndex}
-            />
+            <ProgressIndicator total={reviews.length} activeIndex={activeReviewIndex} />
             <span className="text-xs text-gray-400 sm:hidden">
               {activeReviewIndex + 1} / {reviews.length}
             </span>

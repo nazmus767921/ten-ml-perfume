@@ -51,19 +51,15 @@ export default function MobileProductsFilters() {
         <Button
           variant={"default"}
           size={"lg"}
-          className="w-full group relative overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/25"
+          className="group relative w-full overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/25"
         >
-          <CommandIcon className="size-5 transition-all duration-500 ease-ios-spring group-hover:rotate-12 group-hover:scale-110" />
+          <CommandIcon className="size-5 transition-all duration-500 ease-ios-spring group-hover:scale-110 group-hover:rotate-12" />
           <span className="ml-2 text-xl">Find Your Scent</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" showCloseButton={false} className="flex flex-col pt-16 z-200">
-        <div className="flex-1 overflow-y-auto no-scrollbar">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+      <SheetContent side="right" showCloseButton={false} className="z-200 flex flex-col pt-16">
+        <div className="no-scrollbar flex-1 overflow-y-auto">
+          <motion.div variants={containerVariants} initial="hidden" animate="visible">
             <motion.div variants={itemVariants}>
               <Suspense fallback={<div className="h-48 animate-pulse rounded-lg bg-muted" />}>
                 <ProductsFiltersBase />
@@ -77,7 +73,7 @@ export default function MobileProductsFilters() {
           variants={buttonVariants}
           initial="hidden"
           animate="visible"
-          className="bg-gradient-to-t from-popover via-popover to-popover/95 pt-6 pb-4 px-4 border-t border-border/40"
+          className="border-t border-border/40 bg-gradient-to-t from-popover via-popover to-popover/95 px-4 pt-6 pb-4"
         >
           <FindScentButton />
         </motion.div>

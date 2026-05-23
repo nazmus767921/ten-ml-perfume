@@ -6,7 +6,6 @@ import { HeartIcon } from "@phosphor-icons/react"
 import { IconSwap, IconSwapItem } from "@/components/ui/icon-swap"
 import { useState } from "react"
 
-
 type Props = {}
 
 export default function ProductWishlistButton({}: Props) {
@@ -17,17 +16,12 @@ export default function ProductWishlistButton({}: Props) {
   }
 
   return (
-    <Button
-      variant={"outline"}
-      size={"icon-lg"}
-      className="shrink-0"
-      onClick={handleAddToWishlist}
-    >
+    <Button variant={"outline"} size={"icon-lg"} className="shrink-0" onClick={handleAddToWishlist}>
       <HeartIcon
         className={cn("size-5", {
-            "fill-red-400": isActive
+          "fill-red-400": isActive,
         })}
-        weight={isActive ? "fill": 'regular'}
+        weight={isActive ? "fill" : "regular"}
       />
     </Button>
   )

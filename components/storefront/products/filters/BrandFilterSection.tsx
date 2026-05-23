@@ -37,27 +37,21 @@ export default function BrandFilterSection({ brands }: BrandFilterSectionProps) 
     await setFilter(updatedBrands)
   }
 
-
-   const ClearFilter = () => {
-      return (
-        <Button size={"icon-sm"} variant={"ghost"} onClick={clearFilter} className="w-full">
-          <EraserIcon className="size-4 mr-1" />
-          Clear brands
-        </Button>
-      )
-    }
-  
+  const ClearFilter = () => {
+    return (
+      <Button size={"icon-sm"} variant={"ghost"} onClick={clearFilter} className="w-full">
+        <EraserIcon className="mr-1 size-4" />
+        Clear brands
+      </Button>
+    )
+  }
 
   return (
     <FilterSectionWrapper
       title="Brands"
       collapsible
       // If you want to render the clear button dynamically:
-      action={
-        activeBrands.length > 0 && (
-         <ClearFilter/>
-        )
-      }
+      action={activeBrands.length > 0 && <ClearFilter />}
     >
       <div className="mt-2 flex flex-wrap gap-1">
         {brands.map((brand) => {

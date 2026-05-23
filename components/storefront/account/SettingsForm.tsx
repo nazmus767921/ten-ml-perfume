@@ -7,12 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
-import {
-  UserIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  MapPinIcon,
-} from "@phosphor-icons/react"
+import { UserIcon, EnvelopeIcon, PhoneIcon, MapPinIcon } from "@phosphor-icons/react"
 
 export default function SettingsForm() {
   const user = useUserStore((s) => s.user)
@@ -65,33 +60,19 @@ export default function SettingsForm() {
             <InputGroupAddon>
               <UserIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <InputGroupInput placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
           </InputGroup>
           <InputGroup>
             <InputGroupAddon>
               <EnvelopeIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <InputGroupInput placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </InputGroup>
           <InputGroup>
             <InputGroupAddon>
               <PhoneIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Phone"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+            <InputGroupInput placeholder="Phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
           </InputGroup>
           <div className="flex justify-end">
             <Button onClick={handleProfileSave}>Save Profile</Button>
@@ -114,65 +95,39 @@ export default function SettingsForm() {
             <InputGroupAddon>
               <UserIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Full name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
+            <InputGroupInput placeholder="Full name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
           </InputGroup>
           <InputGroup>
             <InputGroupAddon>
               <PhoneIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Phone number"
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <InputGroupInput placeholder="Phone number" type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           </InputGroup>
           <InputGroup>
             <InputGroupAddon>
               <EnvelopeIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Email"
-              type="email"
-              value={shipEmail}
-              onChange={(e) => setShipEmail(e.target.value)}
-            />
+            <InputGroupInput placeholder="Email" type="email" value={shipEmail} onChange={(e) => setShipEmail(e.target.value)} />
           </InputGroup>
           <div className="grid grid-cols-2 gap-3">
             <InputGroup>
               <InputGroupAddon>
                 <InputGroupText>District</InputGroupText>
               </InputGroupAddon>
-              <InputGroupInput
-                placeholder="District"
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-              />
+              <InputGroupInput placeholder="District" value={district} onChange={(e) => setDistrict(e.target.value)} />
             </InputGroup>
             <InputGroup>
               <InputGroupAddon>
                 <InputGroupText>Area</InputGroupText>
               </InputGroupAddon>
-              <InputGroupInput
-                placeholder="Area"
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-              />
+              <InputGroupInput placeholder="Area" value={area} onChange={(e) => setArea(e.target.value)} />
             </InputGroup>
           </div>
           <InputGroup>
             <InputGroupAddon>
               <MapPinIcon className="size-4" />
             </InputGroupAddon>
-            <InputGroupInput
-              placeholder="Street address"
-              value={streetAddress}
-              onChange={(e) => setStreetAddress(e.target.value)}
-            />
+            <InputGroupInput placeholder="Street address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)} />
           </InputGroup>
           <div className="flex justify-end">
             <Button onClick={handleAddressSave}>Save Address</Button>

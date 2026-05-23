@@ -4,11 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TakaFormatter } from "@/lib/utils"
-import RatingAndReviews, { RatingSummary, Review } from "@/components/storefront/products/ProductRatingAndReview";
-import {
-  DropIcon,
-  TildeIcon,
-} from "@phosphor-icons/react/dist/ssr"
+import RatingAndReviews, { RatingSummary, Review } from "@/components/storefront/products/ProductRatingAndReview"
+import { DropIcon, TildeIcon } from "@phosphor-icons/react/dist/ssr"
 
 const MY_IMAGES = [
   {
@@ -41,8 +38,6 @@ const FRAGRANCE_NOTES = {
 
 const TAGS = ["Men's", "winter", "party"]
 
-
-
 // Fetched from your API / DB
 const summary: RatingSummary = {
   average: 4.5,
@@ -54,7 +49,7 @@ const summary: RatingSummary = {
     { star: 2, count: 3 },
     { star: 1, count: 2 },
   ],
-};
+}
 
 const reviews: Review[] = [
   {
@@ -89,11 +84,9 @@ const reviews: Review[] = [
     body: "Great shop. recommended.",
     avatarUrl: "https://i.pravatar.cc/300",
   },
-];
+]
 
-export default async function ProductDetailsPage({
-  params,
-}: PageProps<"/shop/[productId]">) {
+export default async function ProductDetailsPage({ params }: PageProps<"/shop/[productId]">) {
   const { productId } = await params
 
   return (
@@ -111,12 +104,10 @@ export default async function ProductDetailsPage({
             Latafa
           </Badge>
 
-          <h1 className="mt-1 text-3xl font-bold tracking-tight">
-            Latafa Hawas
-          </h1>
-          
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">Latafa Hawas</h1>
+
           {/* product tags */}
-          <div className="flex items-center gap-2 mt-1">
+          <div className="mt-1 flex items-center gap-2">
             {TAGS.map((tag) => (
               <Badge key={tag} variant={"secondary"} className="py-3">
                 {tag}
@@ -125,9 +116,7 @@ export default async function ProductDetailsPage({
           </div>
 
           {/* price */}
-          <div className="mt-6 text-xl font-bold tracking-tighter">
-            {TakaFormatter.format(1200)}
-          </div>
+          <div className="mt-6 text-xl font-bold tracking-tighter">{TakaFormatter.format(1200)}</div>
 
           <ProductDetailAddToCartSection
             product={{
@@ -152,10 +141,8 @@ export default async function ProductDetailsPage({
               </CardTitle>
             </CardHeader>
             <CardContent className="text-base tracking-wide">
-              Parfums de Marly Layton is a highly popular, luxurious, and
-              versatile niche fragrance designed for both men and women, known
-              for its addictive, crowd-pleasing scent profile. It is best
-              characterized as a sweet, spicy, and woody vanilla fragrance.
+              Parfums de Marly Layton is a highly popular, luxurious, and versatile niche fragrance designed for both men and women, known for its
+              addictive, crowd-pleasing scent profile. It is best characterized as a sweet, spicy, and woody vanilla fragrance.
             </CardContent>
           </Card>
 
@@ -172,16 +159,10 @@ export default async function ProductDetailsPage({
                   return (
                     <div key={key} className="flex flex-col gap-1">
                       {/* Capitalize the key (top -> Top) for better UI */}
-                      <span className="text-base font-semibold capitalize">
-                        {key}
-                      </span>
+                      <span className="text-base font-semibold capitalize">{key}</span>
                       <div className="flex flex-wrap gap-2">
                         {value.map((note, index) => (
-                          <Badge
-                            key={`${key}-${index}`}
-                            variant={"secondary"}
-                            className="py-3"
-                          >
+                          <Badge key={`${key}-${index}`} variant={"secondary"} className="py-3">
                             {note}
                           </Badge>
                         ))}
@@ -196,8 +177,8 @@ export default async function ProductDetailsPage({
       </section>
 
       {/* Review Section */}
-      <section className="lg:col-span-2 lg:pl-17 mt-8">
-       <RatingAndReviews summary={summary} reviews={reviews} />
+      <section className="mt-8 lg:col-span-2 lg:pl-17">
+        <RatingAndReviews summary={summary} reviews={reviews} />
       </section>
 
       {/* Recommendation Section (later) */}

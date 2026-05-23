@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -81,20 +79,13 @@ export default function HeroSection() {
   }, [active, next])
 
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
-    >
+    <section className="relative w-full overflow-hidden" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       <div className="flex min-h-full w-full flex-col md:flex-row">
         {/* LEFT PANEL */}
         <div className="relative z-10 flex w-full flex-col justify-between bg-white px-6 pt-8 pb-0 md:w-[42%] md:px-10">
           <HeroLogoHeader />
 
-          <BrandList
-            brands={BRANDS}
-            activeBrand={activeBrand}
-            onBrandSelect={setActiveBrand}
-          />
+          <BrandList brands={BRANDS} activeBrand={activeBrand} onBrandSelect={setActiveBrand} />
 
           <MarqueeBar brands={BRANDS} />
 
@@ -103,11 +94,7 @@ export default function HeroSection() {
         </div>
 
         {/* RIGHT PANEL */}
-        <ImageSlider
-          slides={SLIDES}
-          activeIndex={active}
-          onSlideSelect={selectSlide}
-        />
+        <ImageSlider slides={SLIDES} activeIndex={active} onSlideSelect={selectSlide} />
       </div>
     </section>
   )
@@ -120,10 +107,7 @@ export default function HeroSection() {
 function HeroLogoHeader() {
   return (
     <div>
-      <h1
-        className="text-[clamp(4rem,10vw,7rem)] leading-none font-black tracking-tighter select-none"
-        style={{ letterSpacing: "-0.03em" }}
-      >
+      <h1 className="text-[clamp(4rem,10vw,7rem)] leading-none font-black tracking-tighter select-none" style={{ letterSpacing: "-0.03em" }}>
         10ML PERFUME
       </h1>
       <p className="mx-auto mt-3 max-w-55 text-center text-[0.6rem] leading-relaxed tracking-widest text-black/70 uppercase md:text-[0.65rem]">
@@ -161,15 +145,13 @@ function BrandList({ brands, activeBrand, onBrandSelect }: BrandListProps) {
             {b.name}
           </span>
           <span className="text-[0.6rem] font-light text-black/40">{b.id}</span>
-          <span
-            className={`absolute bottom-0 left-0 h-px bg-black transition-all duration-300 ${
-              activeBrand === i ? "w-full" : "w-0"
-            }`}
-          />
+          <span className={`absolute bottom-0 left-0 h-px bg-black transition-all duration-300 ${activeBrand === i ? "w-full" : "w-0"}`} />
         </button>
       ))}
       <Link href="/find-scent">
-        <Button size={'lg'} className="py-6 uppercase text-lg lg:text-xl mt-6 hover:bg-primary/80">Find your perfect scent <ArrowRightIcon className="size-6 ms-4 animate-bounce" /></Button>
+        <Button size={"lg"} className="mt-6 py-6 text-lg uppercase hover:bg-primary/80 lg:text-xl">
+          Find your perfect scent <ArrowRightIcon className="ms-4 size-6 animate-bounce" />
+        </Button>
       </Link>
     </div>
   )
@@ -177,8 +159,8 @@ function BrandList({ brands, activeBrand, onBrandSelect }: BrandListProps) {
 
 function MarqueeBar({ brands }: { brands: typeof BRANDS }) {
   // Create a duplicated array so the track has enough content to loop seamlessly
-  const actualBrands = brands.slice(0, brands.length -1)
-  const duplicatedBrands = [...actualBrands, ...actualBrands];
+  const actualBrands = brands.slice(0, brands.length - 1)
+  const duplicatedBrands = [...actualBrands, ...actualBrands]
 
   return (
     <div className="relative -mx-6 mt-6 overflow-hidden bg-black py-3 md:-mx-10">
@@ -197,9 +179,8 @@ function MarqueeBar({ brands }: { brands: typeof BRANDS }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
-
 
 interface SliderProgressBarProps {
   progressTick: number
@@ -253,17 +234,9 @@ function ImageSlider({ slides, activeIndex, onSlideSelect }: ImageSliderProps) {
     >
       {/* SLIDES */}
       {slides.map((s, i) => (
-        <div
-          key={s.id}
-          className="absolute inset-0 transition-opacity duration-700"
-          style={{ opacity: activeIndex === i ? 1 : 0 }}
-        >
+        <div key={s.id} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: activeIndex === i ? 1 : 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={s.image}
-            alt={`slide ${i + 1}`}
-            className="h-full w-full object-cover"
-          />
+          <img src={s.image} alt={`slide ${i + 1}`} className="h-full w-full object-cover" />
         </div>
       ))}
 
@@ -275,9 +248,7 @@ function ImageSlider({ slides, activeIndex, onSlideSelect }: ImageSliderProps) {
             onClick={() => onSlideSelect(i)}
             style={{ cursor: "pointer" }}
             className={`h-10 w-10 overflow-hidden rounded-sm transition-all duration-300 md:h-12 md:w-12 ${
-              activeIndex === i
-                ? "opacity-100 ring-2 ring-black ring-offset-1"
-                : "opacity-60 hover:opacity-90"
+              activeIndex === i ? "opacity-100 ring-2 ring-black ring-offset-1" : "opacity-60 hover:opacity-90"
             }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -294,14 +265,10 @@ function ImageSlider({ slides, activeIndex, onSlideSelect }: ImageSliderProps) {
           top: `${cursorPos.y}px`,
           opacity: isHovered ? 1 : 0,
           transform: `translate(-50%, -50%) scale(${isHovered ? 1.2 : 1})`,
-          boxShadow:
-            "0 0 20px 6px rgba(255, 255, 255, 0.15), 0 0 40px 12px rgba(255, 255, 255, 0.05)",
+          boxShadow: "0 0 20px 6px rgba(255, 255, 255, 0.15), 0 0 40px 12px rgba(255, 255, 255, 0.05)",
         }}
       >
-        <div
-          className="h-6 w-6 rounded-full bg-white opacity-80 backdrop-blur-[1px]"
-          style={{ mixBlendMode: "difference" }}
-        />
+        <div className="h-6 w-6 rounded-full bg-white opacity-80 backdrop-blur-[1px]" style={{ mixBlendMode: "difference" }} />
       </div>
     </div>
   )

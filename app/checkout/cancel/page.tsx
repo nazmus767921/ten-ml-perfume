@@ -10,9 +10,7 @@ export default function CheckoutCancelPage() {
 
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">Payment Cancelled</h1>
-          <p className="text-sm text-muted-foreground/80">
-            Your payment was cancelled. No charges were made.
-          </p>
+          <p className="text-sm text-muted-foreground/80">Your payment was cancelled. No charges were made.</p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">

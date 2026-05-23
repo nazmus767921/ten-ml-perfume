@@ -27,26 +27,17 @@ export async function POST(request: NextRequest) {
           sslczValId: valId,
           sslczTransactionId: validation.tran_id,
         })
-        console.info(
-          `[SSLCommerz IPN] Order ${order.id} updated: paymentStatus=paid`,
-        )
+        console.info(`[SSLCommerz IPN] Order ${order.id} updated: paymentStatus=paid`)
       } else {
-        console.warn(
-          `[SSLCommerz IPN] Order not found for tranId=${tranId}`,
-        )
+        console.warn(`[SSLCommerz IPN] Order not found for tranId=${tranId}`)
       }
     } else {
-      console.warn(
-        `[SSLCommerz IPN] Validation failed for tranId=${tranId}: status=${validation.status}`,
-      )
+      console.warn(`[SSLCommerz IPN] Validation failed for tranId=${tranId}: status=${validation.status}`)
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error(
-      `[SSLCommerz IPN] Error processing tranId=${tranId}, valId=${valId}:`,
-      error,
-    )
+    console.error(`[SSLCommerz IPN] Error processing tranId=${tranId}, valId=${valId}:`, error)
     return NextResponse.json({ success: false }, { status: 200 })
   }
 }

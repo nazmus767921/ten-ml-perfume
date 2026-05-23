@@ -2,35 +2,12 @@
 
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select"
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 import type { ShippingAddress } from "@/lib/types/order"
 
 const DISTRICT_AREAS: Record<string, string[]> = {
-  Dhaka: [
-    "Dhanmondi",
-    "Gulshan",
-    "Mirpur",
-    "Uttara",
-    "Banani",
-    "Mohammadpur",
-    "Bashundhara R/A",
-    "Shyamoli",
-    "Motijheel",
-    "Farmgate",
-  ],
-  Chattogram: [
-    "Agrabad",
-    "Halishahar",
-    "Nasirabad",
-    "Panchlaish",
-    "Kotwali",
-    "Bayezid",
-    "Double Mooring",
-    "Pahartali",
-  ],
+  Dhaka: ["Dhanmondi", "Gulshan", "Mirpur", "Uttara", "Banani", "Mohammadpur", "Bashundhara R/A", "Shyamoli", "Motijheel", "Farmgate"],
+  Chattogram: ["Agrabad", "Halishahar", "Nasirabad", "Panchlaish", "Kotwali", "Bayezid", "Double Mooring", "Pahartali"],
   Rajshahi: ["Boalia", "Motihar", "Shah Makhdum", "Paba", "Kazla"],
   Khulna: ["Khalishpur", "Sonadanga", "Daulatpur", "Khanjahan Ali", "Harintana"],
   Barishal: ["Sadar", "Rupatoli", "Nathullabad", "Gournadi"],
@@ -47,13 +24,9 @@ interface ShippingAddressFormProps {
   errors?: Partial<Record<keyof ShippingAddress, string>>
 }
 
-export function ShippingAddressForm({
-  value,
-  onChange,
-  errors = {},
-}: ShippingAddressFormProps) {
+export function ShippingAddressForm({ value, onChange, errors = {} }: ShippingAddressFormProps) {
   const selectedDistrict = value.district || ""
-  const areas = selectedDistrict ? DISTRICT_AREAS[selectedDistrict] ?? [] : []
+  const areas = selectedDistrict ? (DISTRICT_AREAS[selectedDistrict] ?? []) : []
 
   const update = (field: keyof ShippingAddress, fieldValue: string) => {
     const updateObj: Partial<ShippingAddress> = { [field]: fieldValue }
@@ -163,23 +136,10 @@ export function ShippingAddressForm({
   )
 }
 
-function FieldWrapper({
-  label,
-  error,
-  htmlFor,
-  children,
-}: {
-  label: string
-  error?: string
-  htmlFor?: string
-  children: React.ReactNode
-}) {
+function FieldWrapper({ label, error, htmlFor, children }: { label: string; error?: string; htmlFor?: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <label
-        htmlFor={htmlFor}
-        className="block text-xs font-medium text-muted-foreground"
-      >
+      <label htmlFor={htmlFor} className="block text-xs font-medium text-muted-foreground">
         {label}
       </label>
       {children}

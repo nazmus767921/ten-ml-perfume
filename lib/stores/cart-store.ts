@@ -27,9 +27,7 @@ export const useCartStore = create<CartStore>()((set, get) => ({
     const existing = get().items.find((i) => i.compositeKey === compositeKey)
     if (existing) {
       set({
-        items: get().items.map((i) =>
-          i.compositeKey === compositeKey ? { ...i, quantity: i.quantity + 1 } : i,
-        ),
+        items: get().items.map((i) => (i.compositeKey === compositeKey ? { ...i, quantity: i.quantity + 1 } : i)),
       })
     } else {
       set({ items: [...get().items, { ...item, compositeKey, quantity: 1 }] })
@@ -41,9 +39,7 @@ export const useCartStore = create<CartStore>()((set, get) => ({
   updateQuantity: (compositeKey, quantity) => {
     if (quantity < 1) return
     set({
-      items: get().items.map((i) =>
-        i.compositeKey === compositeKey ? { ...i, quantity } : i,
-      ),
+      items: get().items.map((i) => (i.compositeKey === compositeKey ? { ...i, quantity } : i)),
     })
   },
   clearCart: () => set({ items: [] }),

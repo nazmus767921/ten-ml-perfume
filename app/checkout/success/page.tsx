@@ -77,7 +77,8 @@ function SuccessContent() {
     const timeout = setTimeout(() => {
       setPageState({
         status: "error",
-        message: "We're still verifying your payment, but it's taking a while. Your order has been received and we'll confirm it shortly. Please check back later or contact support.",
+        message:
+          "We're still verifying your payment, but it's taking a while. Your order has been received and we'll confirm it shortly. Please check back later or contact support.",
       })
     }, 15000)
 
@@ -107,13 +108,14 @@ function SuccessContent() {
       const paid = await pollPaymentStatus()
       if (paid) return
 
-      setPageState(prev => {
+      setPageState((prev) => {
         if (prev.status !== "pending_payment") return prev
         const nextAttempts = prev.attempts + 1
         if (nextAttempts >= 12) {
           return {
             status: "error",
-            message: "Payment confirmation is taking longer than expected. Your order has been received and we'll verify the payment manually. Please contact support if you have any concerns.",
+            message:
+              "Payment confirmation is taking longer than expected. Your order has been received and we'll verify the payment manually. Please contact support if you have any concerns.",
           }
         }
         return { ...prev, attempts: nextAttempts }
@@ -148,9 +150,7 @@ function SuccessContent() {
           </div>
 
           <Button variant="outline" asChild>
-            <Link href={isTimeout || isLoadingTimeout ? "/" : "/checkout"}>
-              {isTimeout || isLoadingTimeout ? "Go Home" : "Try Again"}
-            </Link>
+            <Link href={isTimeout || isLoadingTimeout ? "/" : "/checkout"}>{isTimeout || isLoadingTimeout ? "Go Home" : "Try Again"}</Link>
           </Button>
         </div>
       </section>
@@ -168,13 +168,11 @@ function SuccessContent() {
       <section className="container mx-auto flex min-h-(--page-height-safe) flex-col items-center px-3 py-12">
         <div className="flex w-full max-w-lg flex-col items-center gap-8">
           <div className="flex flex-col items-center gap-4 text-center">
-            <SpinnerGap className="size-16 text-amber-500 animate-spin" weight="fill" />
+            <SpinnerGap className="size-16 animate-spin text-amber-500" weight="fill" />
 
             <div className="space-y-1">
               <h1 className="text-2xl font-bold">Payment Confirming...</h1>
-              <p className="text-sm text-muted-foreground/80">
-                We're waiting for payment confirmation. This should take just a moment.
-              </p>
+              <p className="text-sm text-muted-foreground/80">We're waiting for payment confirmation. This should take just a moment.</p>
             </div>
 
             <Badge variant="secondary" className="h-6 gap-1.5 px-3 text-xs">
@@ -189,9 +187,7 @@ function SuccessContent() {
             <CardContent className="space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground/80">Total Paid</span>
-                <span className="font-semibold">
-                  {TakaFormatter.format(order.total, { displayType: "symbol" })}
-                </span>
+                <span className="font-semibold">{TakaFormatter.format(order.total, { displayType: "symbol" })}</span>
               </div>
 
               <Separator />
@@ -235,13 +231,9 @@ function SuccessContent() {
           <CheckCircle className="size-16 text-emerald-500" weight="fill" />
 
           <div className="space-y-1">
-            <h1 className="text-2xl font-bold">
-              {isOnline ? "Payment Successful!" : "Order Placed!"}
-            </h1>
+            <h1 className="text-2xl font-bold">{isOnline ? "Payment Successful!" : "Order Placed!"}</h1>
             <p className="text-sm text-muted-foreground/80">
-              {isOnline
-                ? "Your payment has been confirmed. We'll process your order shortly."
-                : "You'll pay when you receive your order."}
+              {isOnline ? "Your payment has been confirmed. We'll process your order shortly." : "You'll pay when you receive your order."}
             </p>
           </div>
 
@@ -257,9 +249,7 @@ function SuccessContent() {
           <CardContent className="space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground/80">Total Paid</span>
-              <span className="font-semibold">
-                {TakaFormatter.format(order.total, { displayType: "symbol" })}
-              </span>
+              <span className="font-semibold">{TakaFormatter.format(order.total, { displayType: "symbol" })}</span>
             </div>
 
             <Separator />

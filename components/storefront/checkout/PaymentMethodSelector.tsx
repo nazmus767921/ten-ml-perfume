@@ -29,10 +29,7 @@ const METHODS: {
   },
 ]
 
-export function PaymentMethodSelector({
-  value,
-  onChange,
-}: PaymentMethodSelectorProps) {
+export function PaymentMethodSelector({ value, onChange }: PaymentMethodSelectorProps) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {METHODS.map((method) => {
@@ -46,29 +43,13 @@ export function PaymentMethodSelector({
             onClick={() => onChange(method.value)}
             className={cn(
               "flex items-start gap-3 rounded-none border p-4 text-left transition-all",
-              selected
-                ? "border-primary bg-primary/5"
-                : "border-input hover:border-ring",
+              selected ? "border-primary bg-primary/5" : "border-input hover:border-ring"
             )}
           >
-            <Icon
-              className={cn(
-                "mt-0.5 size-5 shrink-0",
-                selected ? "text-primary" : "text-muted-foreground",
-              )}
-            />
+            <Icon className={cn("mt-0.5 size-5 shrink-0", selected ? "text-primary" : "text-muted-foreground")} />
             <div>
-              <span
-                className={cn(
-                  "block text-sm font-medium",
-                  selected ? "text-primary" : "text-foreground",
-                )}
-              >
-                {method.label}
-              </span>
-              <span className="mt-0.5 block text-xs text-muted-foreground">
-                {method.subtitle}
-              </span>
+              <span className={cn("block text-sm font-medium", selected ? "text-primary" : "text-foreground")}>{method.label}</span>
+              <span className="mt-0.5 block text-xs text-muted-foreground">{method.subtitle}</span>
             </div>
           </button>
         )

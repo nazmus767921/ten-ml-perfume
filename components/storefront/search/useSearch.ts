@@ -14,12 +14,10 @@ export function useSearch() {
   const deferredQuery = useDeferredValue(query)
 
   useEffect(() => {
-    if (!deferredQuery.trim()) {
-      setIsLoading(false)
-      return
-    }
+    if (!deferredQuery.trim()) return
 
     let cancelled = false
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true)
 
     searchProducts(deferredQuery)

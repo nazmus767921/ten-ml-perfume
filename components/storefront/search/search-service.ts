@@ -13,10 +13,7 @@ export interface SearchResponse {
   total: number
 }
 
-export async function searchProducts(
-  query: string,
-  limit: number = SEARCH_RESULT_LIMIT,
-): Promise<SearchResponse> {
+export async function searchProducts(query: string, limit: number = SEARCH_RESULT_LIMIT): Promise<SearchResponse> {
   const q = query.toLowerCase().trim()
   if (!q) return { results: [], total: 0 }
 

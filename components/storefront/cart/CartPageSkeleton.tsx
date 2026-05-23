@@ -5,26 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShoppingCartIcon } from "@phosphor-icons/react"
 
 function Pulse({ className }: { className?: string }) {
-  return (
-    <div
-      className={`animate-pulse rounded-sm bg-muted-foreground/10 ${className ?? ""}`}
-    />
-  )
+  return <div className={`animate-pulse rounded-sm bg-muted-foreground/10 ${className ?? ""}`} />
 }
 
 export default function CartPageSkeleton() {
   return (
     <section className="container mx-auto flex min-h-(--page-height-safe) flex-col pb-4 lg:pt-4 lg:pb-8">
       <div className="px-3">
-        <PageTitle
-          icon={<ShoppingCartIcon />}
-          title="Cart"
-          subtitle="Thank you for choosing our service"
-        />
+        <PageTitle icon={<ShoppingCartIcon />} title="Cart" subtitle="Thank you for choosing our service" />
       </div>
       <div className="flex flex-1 flex-col justify-between gap-8 lg:flex-row lg:gap-16">
         <div className="flex w-full max-w-xl flex-col gap-4 px-3 lg:px-0">
-            {[0, 1, 2].map((n) => (
+          {[0, 1, 2].map((n) => (
             <div key={`sk-item-${n}`} className="flex items-center gap-4 py-4">
               <Pulse className="size-20 shrink-0" />
               <div className="flex flex-1 flex-col gap-2">

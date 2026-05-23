@@ -30,9 +30,7 @@ function validateEmail(email: string): boolean {
   return email.includes("@") && email.length > 0
 }
 
-function validateAddress(
-  address: ShippingAddress,
-): Partial<Record<keyof ShippingAddress, string>> {
+function validateAddress(address: ShippingAddress): Partial<Record<keyof ShippingAddress, string>> {
   const errors: Partial<Record<keyof ShippingAddress, string>> = {}
 
   if (!address.fullName.trim()) {
@@ -69,13 +67,9 @@ function validateAddress(
 export function CheckoutForm() {
   const router = useRouter()
   const { items, clearCart } = useCartStore()
-  const [shippingAddress, setShippingAddress] =
-    useState<ShippingAddress>(INITIAL_ADDRESS)
-  const [paymentMethod, setPaymentMethod] =
-    useState<PaymentMethod>("sslcommerz")
-  const [addressErrors, setAddressErrors] = useState<
-    Partial<Record<keyof ShippingAddress, string>>
-  >({})
+  const [shippingAddress, setShippingAddress] = useState<ShippingAddress>(INITIAL_ADDRESS)
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("sslcommerz")
+  const [addressErrors, setAddressErrors] = useState<Partial<Record<keyof ShippingAddress, string>>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = useCallback(
@@ -135,13 +129,11 @@ export function CheckoutForm() {
           }
         }
       } catch {
-        toast.error(
-          "Network error. Please check your connection and try again.",
-        )
+        toast.error("Network error. Please check your connection and try again.")
         setIsSubmitting(false)
       }
     },
-    [shippingAddress, paymentMethod, items, clearCart, router],
+    [shippingAddress, paymentMethod, items, clearCart, router]
   )
 
   if (items.length === 0) {
@@ -164,11 +156,7 @@ export function CheckoutForm() {
               <CardTitle>Shipping Address</CardTitle>
             </CardHeader>
             <CardContent>
-              <ShippingAddressForm
-                value={shippingAddress}
-                onChange={setShippingAddress}
-                errors={addressErrors}
-              />
+              <ShippingAddressForm value={shippingAddress} onChange={setShippingAddress} errors={addressErrors} />
             </CardContent>
           </Card>
 
@@ -177,10 +165,7 @@ export function CheckoutForm() {
               <CardTitle>Payment Method</CardTitle>
             </CardHeader>
             <CardContent>
-              <PaymentMethodSelector
-                value={paymentMethod}
-                onChange={setPaymentMethod}
-              />
+              <PaymentMethodSelector value={paymentMethod} onChange={setPaymentMethod} />
             </CardContent>
           </Card>
         </div>

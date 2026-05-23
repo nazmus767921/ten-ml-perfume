@@ -8,18 +8,12 @@ export async function POST(request: NextRequest) {
     const { orderId, valId } = body
 
     if (!orderId || !valId) {
-      return NextResponse.json(
-        { success: false, error: "orderId and valId are required" },
-        { status: 400 },
-      )
+      return NextResponse.json({ success: false, error: "orderId and valId are required" }, { status: 400 })
     }
 
     const order = await getOrder(orderId)
     if (!order) {
-      return NextResponse.json(
-        { success: false, error: "Order not found" },
-        { status: 404 },
-      )
+      return NextResponse.json({ success: false, error: "Order not found" }, { status: 404 })
     }
 
     const validation = await validateSSLTransaction(valId)
@@ -30,7 +24,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: "Transaction validation failed",
         },
-        { status: 400 },
+        { status: 400 }
       )
     }
 
@@ -42,13 +36,11 @@ export async function POST(request: NextRequest) {
           success: false,
           error: `Amount mismatch: expected ${order.total}, got ${validatedAmount}`,
         },
-        { status: 400 },
+        { status: 400 }
       )
     }
     if (amountDiff > 0 && amountDiff <= 1) {
-      console.warn(
-        `[SSLCommerz] Amount mismatch tolerated: expected=${order.total}, got=${validatedAmount}, diff=${amountDiff}`,
-      )
+      console.warn(`[SSLCommerz] Amount mismatch tolerated: expected=${order.total}, got=${validatedAmount}, diff=${amountDiff}`)
     }
 
     const updated = await updateOrder(orderId, {
@@ -61,9 +53,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, order: updated })
   } catch (error) {
     console.error("Validate error:", error)
-    return NextResponse.json(
-      { success: false, error: "Validation failed" },
-      { status: 500 },
-    )
+    return NextResponse.json({ success: false, error: "Validation failed" }, { status: 500 })
   }
 }
