@@ -27,7 +27,7 @@ const NAV_ACTION_BUTTONS = [
   },
   {
     icon: <UserIcon className="size-5" />,
-    href: "#",
+    href: "/account",
     ariaLabel: "Account",
   },
 ]
@@ -203,7 +203,7 @@ const BottomNavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) return null
+  if (pathname.startsWith("/cart") || pathname.startsWith("/checkout") || pathname.startsWith("/account")) return null
 
   return (
     <motion.nav

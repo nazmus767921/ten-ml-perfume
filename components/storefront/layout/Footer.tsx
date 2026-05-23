@@ -17,6 +17,7 @@ const TERMS_LINKS = [
   { text: "Terms of Service", href: "/terms" },
   { text: "Shipping & Returns", href: "/shipping" },
   { text: "Contact", href: "/contact" },
+  { text: "My Account", href: "/account" },
 ]
 
 export default function Footer() {
