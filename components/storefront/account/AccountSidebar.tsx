@@ -51,16 +51,14 @@ export default function AccountSidebar() {
         })}
       </nav>
 
-      {/* Mobile tabs */}
-      <div aria-label="Account pages" role="tablist" className="flex overflow-x-auto border-b border-border lg:hidden">
+      {/* Mobile nav */}
+      <nav aria-label="Account pages" className="flex overflow-x-auto border-b border-border lg:hidden">
         {SIDEBAR_ITEMS.map((item) => {
           const isActive = isItemActive(item.href, pathname)
           return (
             <Link
               key={item.href}
               href={item.href}
-              role="tab"
-              aria-selected={isActive}
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-xs font-medium transition-colors duration-200",
@@ -74,7 +72,7 @@ export default function AccountSidebar() {
             </Link>
           )
         })}
-      </div>
+      </nav>
     </>
   )
 }

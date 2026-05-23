@@ -1,6 +1,7 @@
 "use client"
 
 import { useUserStore } from "@/lib/stores/user-store"
+import { MOCK_ORDERS } from "@/lib/mock/orders"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { ShoppingBagIcon, HeartIcon } from "@phosphor-icons/react"
@@ -29,7 +30,7 @@ export default function AccountOverview() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold">3</p>
+              <p className="text-2xl font-bold">{MOCK_ORDERS.length}</p>
               <p className="text-xs text-muted-foreground">View order history</p>
             </CardContent>
           </Card>

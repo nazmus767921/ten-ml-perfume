@@ -88,6 +88,7 @@ export default function SettingsForm() {
             </InputGroupAddon>
             <InputGroupInput
               placeholder="Phone"
+              type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -125,6 +126,7 @@ export default function SettingsForm() {
             </InputGroupAddon>
             <InputGroupInput
               placeholder="Phone number"
+              type="tel"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
