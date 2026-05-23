@@ -180,7 +180,6 @@ const BottomNavBar = () => {
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 shadow-lg shadow-black/20">
-        <SearchModal />
         <TapButton key="account" asChild aria-label="Account" className="text-primary-foreground">
           <Link href="/account">
             <UserIcon className="size-5" />
@@ -232,14 +231,16 @@ export default function NavBar() {
           <Logo />
         </Link>
 
-        <div className="hidden items-center gap-1 justify-self-end lg:flex">
+        <div className="flex items-center gap-1 justify-self-end">
           <SearchModal />
-          {NAV_ACTION_BUTTONS.map((item) => (
-            <TapButton key={item.ariaLabel} asChild aria-label={item.ariaLabel}>
-              <Link href={item.href}>{item.icon}</Link>
-            </TapButton>
-          ))}
-          <CartButton />
+          <div className="hidden items-center gap-1 lg:flex">
+            {NAV_ACTION_BUTTONS.map((item) => (
+              <TapButton key={item.ariaLabel} asChild aria-label={item.ariaLabel}>
+                <Link href={item.href}>{item.icon}</Link>
+              </TapButton>
+            ))}
+            <CartButton />
+          </div>
         </div>
       </nav>
       <BottomNavBar />
