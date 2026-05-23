@@ -17,7 +17,7 @@ export default function FindScentPage() {
       <div className="mt-4 flex w-full flex-1 items-start justify-center px-3">
         <div className="w-full max-w-xl">
           <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" />}>
-            <DesktopProductsFilters />
+            <DesktopProductsFilters includeTitle={false} />
           </Suspense>
         </div>
       </div>

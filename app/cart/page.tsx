@@ -1,20 +1,20 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
 import CartItem from "@/components/storefront/cart/CartItem"
 import CartPageSkeleton from "@/components/storefront/cart/CartPageSkeleton"
 import PageTitle from "@/components/storefront/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 import { Item, ItemActions, ItemContent, ItemGroup, ItemTitle } from "@/components/ui/item"
 import { Separator } from "@/components/ui/separator"
-import { TakaFormatter } from "@/lib/utils"
 import { useCartStore } from "@/lib/stores/cart-store"
-import { ArrowRightIcon, CaretDown, Lock, ShoppingCartIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
+import { TakaFormatter } from "@/lib/utils"
+import { ArrowRightIcon, CaretDownIcon, Lock, ShoppingCartIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "motion/react"
 import Link from "next/link"
+import { useEffect, useRef, useState } from "react"
 
 const SUMMARY_STORAGE_KEY = "cart-summary-collapsed"
 const STORAGE_OPEN = "open"
@@ -96,7 +96,7 @@ function CartPage() {
             <EmptyDescription>Looks like you haven&apos;t added anything to your cart yet.</EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
-            <Button asChild>
+            <Button size={"sm"} asChild>
               <Link href="/shop">Continue Shopping</Link>
             </Button>
           </EmptyContent>
@@ -132,7 +132,7 @@ function CartPage() {
                           )}
                         </span>
                         <motion.div animate={{ rotate: summaryOpen ? -180 : 0 }} transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}>
-                          <CaretDown className="size-4 text-muted-foreground/70" />
+                          <CaretDownIcon className="size-4 text-muted-foreground/70" />
                         </motion.div>
                       </CardTitle>
                     </CardHeader>

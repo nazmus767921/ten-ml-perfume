@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCartStore } from "@/lib/stores/cart-store"
 import { SearchModal } from "@/components/storefront/search/SearchModal"
-import { ListIcon, ShoppingCartSimpleIcon, UserIcon, XIcon } from "@phosphor-icons/react"
+import { HeartIcon, ListIcon, ShoppingCartSimpleIcon, StorefrontIcon, UserIcon, XIcon } from "@phosphor-icons/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useUserStore } from "@/lib/stores/user-store"
 
 const NAV_ACTION_BUTTONS = [
   {
@@ -151,6 +152,7 @@ const BottomNavBar = () => {
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
   const totalItems = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
+  const wishlistCount = useUserStore((s) => s.wishlist.length)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,7 +172,40 @@ const BottomNavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (pathname.startsWith("/cart") || pathname.startsWith("/checkout") || pathname.startsWith("/account")) return null
+  if (pathname.startsWith("/cart") || pathname.startsWith("/checkout")) return null
+
+  const navItems = [
+    {
+      key: "shop",
+      label: "Shop",
+      href: "/shop",
+      icon: StorefrontIcon,
+      isActive: pathname.startsWith("/shop"),
+    },
+    {
+      key: "wishlist",
+      label: "Wishlist",
+      href: "/account/wishlist",
+      icon: HeartIcon,
+      isActive: pathname === "/account/wishlist",
+      badge: wishlistCount,
+    },
+    {
+      key: "cart",
+      label: "Cart",
+      href: "/cart",
+      icon: ShoppingCartSimpleIcon,
+      isActive: pathname.startsWith("/cart"),
+      badge: totalItems,
+    },
+    {
+      key: "account",
+      label: "Account",
+      href: "/account",
+      icon: UserIcon,
+      isActive: pathname.startsWith("/account") && pathname !== "/account/wishlist",
+    },
+  ]
 
   return (
     <motion.nav
@@ -179,25 +214,33 @@ const BottomNavBar = () => {
       animate={{ y: isVisible ? 0 : 120 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 shadow-lg shadow-black/20">
-        <TapButton key="account" asChild aria-label="Account" className="text-primary-foreground">
-          <Link href="/account">
-            <UserIcon className="size-5" />
-          </Link>
-        </TapButton>
-        <div className="h-5 w-px bg-primary-foreground/20" />
-        <Link href="/cart">
-          <div className="relative">
-            {totalItems > 0 && (
-              <Badge className="absolute top-2 right-1 z-1 flex aspect-square h-4.5 min-w-[18px] items-center justify-center rounded-full bg-primary-foreground px-1 text-[0.55rem] text-primary ring-3">
-                {totalItems}
-              </Badge>
-            )}
-            <TapButton aria-label={`View cart, ${totalItems} items`} className="text-primary-foreground">
-              <ShoppingCartSimpleIcon className="size-5" />
-            </TapButton>
-          </div>
-        </Link>
+      <div className="flex items-center gap-1 rounded-full bg-primary px-2.5 py-1.5 shadow-lg shadow-black/20">
+        {navItems.map((item, index) => {
+          const Icon = item.icon
+          const isItemActive = item.isActive
+
+          return (
+            <div key={item.key} className="flex items-center">
+              {index > 0 && <div className="mx-1.5 h-5 w-px bg-primary-foreground/20" />}
+              <Link href={item.href} className="relative block">
+                {item.badge !== undefined && item.badge > 0 && (
+                  <Badge className="absolute -top-1.5 -right-1 z-1 flex aspect-square h-4.5 min-w-[18px] items-center justify-center rounded-full bg-primary-foreground px-1 text-[0.55rem] font-bold text-primary ring-3 ring-primary">
+                    {item.badge}
+                  </Badge>
+                )}
+                <TapButton
+                  aria-label={`${item.label}${item.badge ? `, ${item.badge} items` : ""}`}
+                  className={cn(
+                    "text-primary-foreground transition-all duration-200",
+                    isItemActive ? "scale-110 opacity-100" : "opacity-60 hover:opacity-85"
+                  )}
+                >
+                  <Icon className="size-5" weight={isItemActive && item.key === "wishlist" ? "fill" : "regular"} />
+                </TapButton>
+              </Link>
+            </div>
+          )
+        })}
       </div>
     </motion.nav>
   )
