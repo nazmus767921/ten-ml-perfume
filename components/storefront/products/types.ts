@@ -34,4 +34,14 @@ export interface Product {
   colorLabel?: string;
   /** Available size variants with per-ml pricing */
   mlVariants?: MlVariant[];
+  /** Brand name e.g. "Chanel", "Dior" */
+  brand?: string;
+  /** Fragrance notes breakdown */
+  notes?: {
+    top?: string[]
+    heart?: string[]
+    base?: string[]
+  }
+  /** Target audience category */
+  category?: "Men" | "Women" | "Unisex"
 }
