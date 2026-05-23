@@ -1,11 +1,7 @@
 "use client"
 
 import { useState, useDeferredValue, useEffect, useCallback } from "react"
-import {
-  searchProducts,
-  SEARCH_RESULT_LIMIT,
-  type SearchResult,
-} from "./search-service"
+import { searchProducts, SEARCH_RESULT_LIMIT, type SearchResult } from "./search-service"
 
 export function useSearch() {
   const [query, setQuery] = useState("")
@@ -18,7 +14,10 @@ export function useSearch() {
   const deferredQuery = useDeferredValue(query)
 
   useEffect(() => {
-    if (!deferredQuery.trim()) return
+    if (!deferredQuery.trim()) {
+      setIsLoading(false)
+      return
+    }
 
     let cancelled = false
     setIsLoading(true)
