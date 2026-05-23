@@ -1,126 +1,10 @@
 import DesktopProductsFilters from "@/components/storefront/products/filters/DesktopProductsFilters"
 import MobileProductsFilters from "@/components/storefront/products/filters/MobileProductsFilters"
 import { ProductCard } from "@/components/storefront/products/ProductCard"
-import { Product } from "@/components/storefront/products/types"
 import PageTitle from "@/components/storefront/ui/PageHeader"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 import { ShoppingBagIcon } from "@phosphor-icons/react/dist/ssr"
-
-// ─── Demo / default data ─────────────────────────────────────────────────────
-const DEFAULT_PRODUCTS: Product[] = [
-  {
-    id: 1,
-    name: "Midnight Oud Eau de Parfum (100ml)",
-    originalPrice: 14500,
-    price: 12500,
-    badge: "sales",
-    colors: [
-      { value: "#1e1b4b", label: "Deep Indigo" },
-      { value: "#b45309", label: "Amber Gold" },
-      { value: "#111827", label: "Obsidian" },
-    ],
-    defaultColorIndex: 0,
-    mlVariants: [
-      { ml: 3, price: 1200 },
-      { ml: 5, price: 1800 },
-      { ml: 10, price: 3200 },
-      { ml: 15, price: 4800 },
-      { ml: 30, price: 8500 },
-    ],
-  },
-  {
-    id: 2,
-    name: "Santal Intense Extrait de Parfum (50ml)",
-    price: 18000,
-    badge: "premium",
-    outOfStock: true,
-    colors: [
-      { value: "#d97706", label: "Warm Sandalwood" },
-      { value: "#78350f", label: "Dark Cedar" },
-    ],
-    defaultColorIndex: 0,
-    mlVariants: [
-      { ml: 3, price: 1500 },
-      { ml: 5, price: 2400 },
-      { ml: 10, price: 4500 },
-      { ml: 15, price: 6500 },
-      { ml: 30, price: 12000 },
-    ],
-  },
-  {
-    id: 3,
-    name: "Néroli Blanc Bright Blossom (75ml)",
-    originalPrice: 9500,
-    price: 8200,
-    secondaryBadge: "new",
-    colors: [
-      { value: "#fef08a", label: "Soft Citrus" },
-      { value: "#f0fdf4", label: "Clear Glass" },
-      { value: "#f472b6", label: "Rose Tint" },
-    ],
-    colorLabel: "Frosted Crystal",
-    defaultColorIndex: 1,
-    mlVariants: [
-      { ml: 3, price: 800 },
-      { ml: 5, price: 1200 },
-      { ml: 10, price: 2200 },
-      { ml: 15, price: 3200 },
-      { ml: 30, price: 5800 },
-    ],
-  },
-  {
-    id: 4,
-    name: "Rouge 540 Amber Floral Elegance",
-    price: 24000,
-    badge: "premium",
-    colors: [
-      { value: "#991b1b", label: "Crimson Red" },
-      { value: "#ca8a04", label: "Liquid Gold" },
-    ],
-    defaultColorIndex: 0,
-    mlVariants: [
-      { ml: 3, price: 2200 },
-      { ml: 5, price: 3500 },
-      { ml: 10, price: 6500 },
-      { ml: 15, price: 9500 },
-      { ml: 30, price: 18000 },
-    ],
-  },
-  {
-    id: 5,
-    name: "Bleu de Select Refreshing Cologne (150ml)",
-    originalPrice: 11000,
-    price: 9900,
-    badge: "sales",
-    colors: [
-      { value: "#0f172a", label: "Navy Blue" },
-      { value: "#64748b", label: "Slate Gray" },
-    ],
-    defaultColorIndex: 0,
-    mlVariants: [
-      { ml: 3, price: 700 },
-      { ml: 5, price: 1100 },
-      { ml: 10, price: 2000 },
-      { ml: 15, price: 3000 },
-      { ml: 30, price: 5500 },
-    ],
-  },
-  {
-    id: 6,
-    name: "Vanilla Absolute Unisex Oil Mist (30ml)",
-    price: 4500,
-    badge: "sales",
-    colors: [{ value: "#f59e0b", label: "Warm Honey" }],
-    defaultColorIndex: 0,
-    mlVariants: [
-      { ml: 3, price: 600 },
-      { ml: 5, price: 900 },
-      { ml: 10, price: 1600 },
-      { ml: 15, price: 2400 },
-      { ml: 30, price: 4500 },
-    ],
-  },
-]
+import { MOCK_PRODUCTS } from "@/lib/mock/products"
 
 const SortFilter = () => {
   return (
@@ -177,7 +61,7 @@ export default function ShopPage() {
 
           {/* listing */}
           <section className="mt-4 grid w-full flex-1 grid-cols-2 gap-2 lg:grid-cols-3 lg:gap-4">
-            {DEFAULT_PRODUCTS.map((product) => (
+            {MOCK_PRODUCTS.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </section>
