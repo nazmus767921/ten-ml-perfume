@@ -6,7 +6,6 @@ import { useUserStore } from "@/lib/stores/user-store"
 
 export default function LoginPage() {
   const login = useUserStore((s) => s.login)
-  const isAuthenticated = useUserStore((s) => s.isAuthenticated)
   const router = useRouter()
 
   useEffect(() => {
