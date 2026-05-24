@@ -1,6 +1,7 @@
 "use client"
 
 import ProductBadge from "@/components/storefront/products/ProductBadge"
+import ProductWishlistButton from "@/components/storefront/products/ProductWishlistButton"
 import StarRating from "@/components/storefront/products/StarRating"
 import { Product } from "@/components/storefront/products/types"
 import { Badge } from "@/components/ui/badge"
@@ -45,9 +46,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <article className="w-full">
-      {/* image */}
-      <Link href={`/shop/${product.id}`}>
-        <div className="relative aspect-square w-full bg-gray-50">
+      {/* image area with floating wishlist button */}
+      <div className="group relative aspect-square w-full bg-gray-50">
+        <Link href={`/shop/${product.id}`} className="block size-full">
           <Image src={""} width={250} height={250} alt="" className="size-full object-cover" />
 
           {/* Top-left badge */}
@@ -56,9 +57,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               <ProductBadge variant={product.badge} />
             </div>
           )}
-          {/* Top-right secondary badge */}
+          {/* Top-right secondary badge - repositioned to leave space for wishlist button */}
           {product.secondaryBadge && (
-            <div className="absolute -top-1 right-0 z-10">
+            <div className="absolute -top-1 right-[44px] z-10">
               <ProductBadge variant={product.secondaryBadge} />
             </div>
           )}
@@ -71,8 +72,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               </Badge>
             </div>
           )}
+        </Link>
+
+        {/* Floating Wishlist Heart Button - outside the Link to prevent invalid nested interactivity */}
+        <div className="absolute top-0 right-0 z-20">
+          <ProductWishlistButton productId={product.id} productName={product.name} variant="floating" />
         </div>
-      </Link>
+      </div>
       {/* content */}
       <div className="flex flex-col pt-1 pb-4">
         <div className="px-1">

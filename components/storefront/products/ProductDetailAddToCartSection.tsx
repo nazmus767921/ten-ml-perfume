@@ -47,7 +47,7 @@ export default function ProductDetailAddToCartSection({ product }: ProductDetail
         <Button size={"lg"} className="flex-1 text-lg">
           Buy Now
         </Button>
-        <ProductWishlistButton />
+        <ProductWishlistButton productId={product.id} productName={product.name} />
       </div>
     </>
   )
