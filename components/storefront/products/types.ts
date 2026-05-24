@@ -44,4 +44,6 @@ export interface Product {
   }
   /** Target audience category */
   category?: "Men" | "Women" | "Unisex"
+  /** Primary image URL */
+  imageUrl?: string
 }

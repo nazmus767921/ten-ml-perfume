@@ -49,7 +49,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       {/* image area with floating wishlist button */}
       <div className="group relative aspect-square w-full bg-gray-50">
         <Link href={`/shop/${product.id}`} className="block size-full">
-          <Image src={""} width={250} height={250} alt="" className="size-full object-cover" />
+          <Image src={product.imageUrl || "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80"} width={250} height={250} alt={product.name} className="size-full object-cover" />
 
           {/* Top-left badge */}
           {product.badge && (
