@@ -97,22 +97,10 @@ export default function TrendingNowSection() {
 
   return (
     <section className="py-16 md:py-24">
-      <SectionHeader 
-        label={
-          <span className="flex items-center gap-2">
-            TRENDING NOW
-            <motion.div
-              animate={{ rotate: [-5, 5, -5] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <Flame className="size-6 text-orange-500 md:size-8" weight="fill" />
-            </motion.div>
-          </span>
-        }
-      />
+      <SectionHeader label="TRENDING NOW" />
 
-      <motion.div 
-        className="mx-auto grid w-full grid-cols-2 gap-x-4 gap-y-8 px-6 md:grid-cols-4 md:gap-x-6 md:gap-y-12 md:px-10"
+      <motion.div
+        className="mx-auto grid w-full grid-cols-2 gap-x-3 gap-y-3 px-3 md:grid-cols-4 md:gap-x-6 md:gap-y-12 md:px-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
@@ -120,9 +108,6 @@ export default function TrendingNowSection() {
       >
         {TRENDING_PRODUCTS.map((product) => (
           <motion.div key={product.id} variants={itemVariants} className="relative">
-            <div className="absolute top-2 left-2 z-20 flex size-8 items-center justify-center rounded-full bg-white border-2 border-black font-black text-black shadow-lg md:size-10 md:text-lg">
-              #{product.rank}
-            </div>
             <ProductCard product={product} />
           </motion.div>
         ))}

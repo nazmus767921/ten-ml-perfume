@@ -25,10 +25,10 @@ const TOP_REVIEWS: Review[] = [
 
 function ReviewCard({ review }: { review: Review }) {
   return (
-    <div className="flex w-72 flex-shrink-0 flex-col gap-4 rounded-xl border border-white/5 bg-white/5 p-5 transition-colors hover:bg-white/10 md:w-80">
+    <div className="flex w-72 flex-shrink-0 flex-col gap-4 border border-white/5 bg-white/5 p-5 transition-colors hover:bg-white/10 md:w-80">
       <div className="flex items-center gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={review.avatar} alt={review.name} className="size-10 rounded-full object-cover" />
+        <img src={review.avatar} alt={review.name} className="size-10 object-cover" />
         <div className="flex flex-col">
           <span className="text-sm font-semibold text-white">{review.name}</span>
           <div className="pointer-events-none mt-0.5">
@@ -38,7 +38,7 @@ function ReviewCard({ review }: { review: Review }) {
       </div>
       <p className="text-sm leading-relaxed text-white/80 line-clamp-3">"{review.text}"</p>
       <div className="mt-auto pt-2">
-        <span className="inline-flex items-center rounded-sm bg-white/10 px-2 py-1 text-[0.65rem] font-bold tracking-widest text-white/70 uppercase">
+        <span className="inline-flex items-center bg-white/10 px-2 py-1 text-[0.65rem] font-bold tracking-widest text-white/70 uppercase">
           {review.product}
         </span>
       </div>

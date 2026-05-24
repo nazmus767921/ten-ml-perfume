@@ -30,7 +30,7 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
   }
 
   return (
-    <div className="flex w-[85vw] flex-shrink-0 flex-col overflow-hidden rounded-2xl bg-zinc-950 text-white md:w-[400px]">
+    <div className="flex w-[85vw] flex-shrink-0 flex-col overflow-hidden bg-zinc-950 text-white md:w-[400px]">
       <div className="relative h-64 w-full overflow-hidden bg-zinc-900 p-6">
         {/* Stacked Images Effect */}
         <div className="relative h-full w-full">
@@ -41,7 +41,7 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
               whileInView={{ rotate: idx === 0 ? -6 : 6, x: idx === 0 ? -10 : 10 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="absolute inset-0 mx-auto aspect-[4/5] w-3/4 overflow-hidden rounded-xl border border-white/10 shadow-xl"
+              className="absolute inset-0 mx-auto aspect-[4/5] w-3/4 overflow-hidden border border-white/10 shadow-xl"
               style={{ zIndex: 10 - idx }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -50,23 +50,23 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
           ))}
         </div>
       </div>
-      
+
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl font-bold tracking-wide">{bundle.name}</h3>
         <p className="mt-1 text-sm text-white/50">{bundle.tagline}</p>
-        
+
         <div className="my-6 flex-1 space-y-2">
           <p className="text-xs font-semibold tracking-widest text-white/40 uppercase">Includes:</p>
           <ul className="space-y-1">
             {bundle.items.map((item, i) => (
-              <li key={i} className="text-sm text-white/80 flex items-center gap-2">
-                <span className="size-1 rounded-full bg-white/20" />
+              <li key={i} className="flex items-center gap-2 text-sm text-white/80">
+                <span className="size-1 bg-white/20" />
                 {item.name}
               </li>
             ))}
           </ul>
         </div>
-        
+
         <div className="mt-auto flex items-end justify-between border-t border-white/10 pt-6">
           <div>
             <p className="text-xs text-white/40 line-through">{TakaFormatter.format(bundle.totalOriginalPrice)}</p>
@@ -85,12 +85,9 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
 export default function GiftBundlesSection() {
   return (
     <section className="py-16 md:py-24">
-      <SectionHeader 
-        label="GIFT SETS & BUNDLES" 
-        subtitle="The Perfect Gift"
-      />
-      
-      <div className="hide-scrollbar flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-8 md:px-10">
+      <SectionHeader label="GIFT SETS & BUNDLES" subtitle="The Perfect Gift" />
+
+      <div className="no-scrollbar flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-8 md:px-10">
         {BUNDLES.map((bundle, idx) => (
           <motion.div
             key={bundle.id}

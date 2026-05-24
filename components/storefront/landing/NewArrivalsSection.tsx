@@ -113,10 +113,10 @@ export default function NewArrivalsSection() {
 
         {/* Carousel Controls */}
         <div className="mt-8 flex items-center justify-end gap-2">
-          <Button variant="outline" size="icon" className="rounded-full" onClick={scrollPrev} aria-label="Previous slide">
+          <Button variant="outline" size="icon" className="" onClick={scrollPrev} aria-label="Previous slide">
             <ArrowLeft className="size-4" />
           </Button>
-          <Button variant="outline" size="icon" className="rounded-full" onClick={scrollNext} aria-label="Next slide">
+          <Button variant="outline" size="icon" className="" onClick={scrollNext} aria-label="Next slide">
             <ArrowRight className="size-4" />
           </Button>
         </div>

@@ -50,7 +50,7 @@ export default function WhyTenMLSection() {
                   "md:border-background/10 md:border-r md:px-6 md:last:border-r-0"
                 )}
               >
-                <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-background/5 text-background transition-transform duration-500 ease-out group-hover:scale-110 group-hover:bg-background/10">
+                <div className="mb-6 flex size-16 items-center justify-center bg-background/5 text-background transition-transform duration-500 ease-out group-hover:scale-110 group-hover:bg-background/10">
                   <Icon weight="duotone" className="size-8" />
                 </div>
                 <h3 className="mb-3 text-sm font-bold tracking-wider text-background uppercase">{pillar.title}</h3>

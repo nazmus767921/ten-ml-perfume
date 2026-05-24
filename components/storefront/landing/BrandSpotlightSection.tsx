@@ -1,9 +1,9 @@
 "use client"
 
+import { useState, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, Variants } from "motion/react"
-import SectionHeader from "@/components/storefront/landing/SectionHeader"
+import { motion, useSpring } from "motion/react"
 import { cn } from "@/lib/utils"
 
 const BRANDS_SPOTLIGHT = [
@@ -17,69 +17,91 @@ const BRANDS_SPOTLIGHT = [
   { id: "decant", name: "Decant", slug: "decant", previewImage: "https://images.unsplash.com/photo-1590736969955-71cc94801759?w=600&q=80" },
 ]
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  },
-}
-
 export default function BrandSpotlightSection() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  
+  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 }
+  const mouseX = useSpring(0, springConfig)
+  const mouseY = useSpring(0, springConfig)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!sectionRef.current) return
+    const rect = sectionRef.current.getBoundingClientRect()
+    mouseX.set(e.clientX - rect.left)
+    mouseY.set(e.clientY - rect.top)
+  }
+
   return (
-    <section className="py-16 md:py-24 bg-[#F9F9F7] dark:bg-[#0a0a0a] overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-        <SectionHeader 
-          label="Brand Spotlight" 
-          subtitle="Explore our curated collection of world-class perfumery."
-          cta={{ text: "All Brands", href: "/shop" }}
-        />
-
-        <motion.div 
-          className="mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 md:gap-6 lg:gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {BRANDS_SPOTLIGHT.map((brand) => (
-            <motion.div key={brand.id} variants={itemVariants} className="relative z-10 hover:z-50 group">
-              <Link 
-                href={`/shop?brands=${brand.slug}`}
-                className="block rounded-full border border-black/5 bg-white/80 px-6 py-3 md:px-10 md:py-5 text-center text-lg md:text-2xl font-bold tracking-widest uppercase text-black/80 transition-all duration-300 hover:border-black/20 hover:bg-white hover:text-black hover:shadow-xl dark:border-white/5 dark:bg-white/5 dark:text-white/80 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                {brand.name}
-              </Link>
-
-              {/* Floating Image Preview on Hover */}
-              <div className="pointer-events-none absolute bottom-full left-1/2 mb-6 h-56 w-44 -translate-x-1/2 -translate-y-4 scale-90 opacity-0 shadow-2xl transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:scale-100 group-hover:opacity-100 rounded-2xl overflow-hidden hidden md:block">
-                <Image 
-                  src={brand.previewImage} 
-                  alt={`${brand.name} featured product`}
-                  fill
-                  className="object-cover"
-                  sizes="176px"
-                />
-                <div className="absolute inset-0 border border-black/10 dark:border-white/10 rounded-2xl" />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+    <section 
+      ref={sectionRef}
+      className="relative w-full bg-[#F9F9F7] py-20 overflow-hidden dark:bg-[#0a0a0a]"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setHoveredIndex(null)}
+    >
+      <div className="flex w-full items-end justify-between px-4 pb-12 md:px-12">
+        <h3 className="text-2xl font-black uppercase tracking-widest text-black dark:text-white md:text-4xl">
+          Brand Spotlight
+        </h3>
+        <p className="hidden max-w-sm text-right text-sm font-bold uppercase tracking-wider text-black/60 dark:text-white/60 md:block md:text-base">
+          Explore our curated collection of world-class perfumery.
+        </p>
       </div>
+
+      <div className="relative z-10 flex w-full flex-col border-t border-black dark:border-white">
+        {BRANDS_SPOTLIGHT.map((brand, idx) => (
+          <Link
+            key={brand.id}
+            href={`/shop?brands=${brand.slug}`}
+            className="group relative flex w-full items-center justify-between border-b border-black px-4 py-6 transition-colors dark:border-white md:px-12 md:py-10"
+            onMouseEnter={() => setHoveredIndex(idx)}
+          >
+            <h2 className="relative z-10 m-0 text-[12vw] font-black uppercase leading-[0.85] tracking-tighter text-black transition-all duration-300 group-hover:text-transparent group-hover:[-webkit-text-stroke:2px_black] dark:text-white dark:group-hover:[-webkit-text-stroke:2px_white] md:text-[9vw] lg:text-[8vw]">
+              {brand.name}
+            </h2>
+            
+            <span className="relative z-10 hidden text-xl font-black uppercase tracking-widest text-black opacity-0 transition-all duration-300 group-hover:opacity-100 dark:text-white md:block md:text-3xl">
+              Explore
+            </span>
+          </Link>
+        ))}
+      </div>
+
+      <motion.div
+        className="pointer-events-none absolute left-0 top-0 z-0 hidden h-[450px] w-[350px] md:block"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{
+          opacity: hoveredIndex !== null ? 1 : 0,
+          scale: hoveredIndex !== null ? 1 : 0.8,
+        }}
+        transition={{ opacity: { duration: 0.4, ease: "easeOut" }, scale: { duration: 0.4, ease: "easeOut" } }}
+      >
+        {BRANDS_SPOTLIGHT.map((brand, idx) => (
+          <div 
+            key={brand.id} 
+            className={cn(
+              "absolute inset-0 transition-all duration-500 ease-out",
+              hoveredIndex === idx ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            )}
+          >
+            <Image
+              src={brand.previewImage}
+              alt={brand.name}
+              fill
+              className="object-cover"
+              sizes="350px"
+              priority={idx < 4}
+            />
+            <div className="absolute inset-0 bg-black/10 mix-blend-overlay" />
+          </div>
+        ))}
+      </motion.div>
     </section>
   )
 }
