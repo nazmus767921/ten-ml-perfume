@@ -40,7 +40,7 @@ export default function ProductWishlistButton({ productId, productName = "Produc
         type="button"
         onClick={handleAddToWishlist}
         className={cn(
-          "flex size-10 items-center justify-center border-b border-l border-border/20 bg-background/95 text-muted-foreground transition-all duration-200 hover:bg-background hover:text-foreground active:bg-muted",
+          "flex size-10 items-center justify-center rounded-bl-[10px] border-b border-l border-border/20 bg-background/40 text-muted-foreground backdrop-blur-2xl transition-all duration-200 hover:bg-background hover:text-foreground active:bg-muted",
           {
             "text-red-500 hover:text-red-600": isActive,
           },

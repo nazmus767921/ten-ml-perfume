@@ -35,9 +35,9 @@ export default function PerfumeForFilterSection({ categories }: PerfumeForFilter
     <FilterSectionWrapper title="For" action={<ClearFilter />}>
       <div className="grid grid-cols-3 gap-1">
         {categories.map((cat) => {
-          const isActive = category === cat
+          const isActive = category === cat.toLowerCase()
           return (
-            <Button key={cat} variant={isActive ? "default" : "secondary"} size={"lg"} onClick={() => setFilter(cat)}>
+            <Button key={cat} variant={isActive ? "default" : "secondary"} size={"lg"} onClick={() => setFilter(cat.toLowerCase())}>
               {cat}
             </Button>
           )

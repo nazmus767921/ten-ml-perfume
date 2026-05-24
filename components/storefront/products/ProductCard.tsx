@@ -45,11 +45,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   }
 
   return (
-    <article className="w-full">
-      {/* image area with floating wishlist button */}
-      <div className="group relative aspect-square w-full bg-gray-50">
+    <article className="flex h-full w-full flex-col">
+      {/* ADDED `shrink-0` to guarantee the image stays a perfect square and doesn't get squished */}
+      <div className="group relative aspect-139/160 w-full shrink-0 overflow-hidden bg-gray-50">
         <Link href={`/shop/${product.id}`} className="block size-full">
-          <Image src={product.imageUrl || "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80"} width={250} height={250} alt={product.name} className="size-full object-cover" />
+          <Image
+            src={product.imageUrl || "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80"}
+            width={250}
+            height={250}
+            alt={product.name}
+            className="size-full object-cover object-center"
+          />
 
           {/* Top-left badge */}
           {product.badge && (
@@ -57,57 +63,59 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               <ProductBadge variant={product.badge} />
             </div>
           )}
-          {/* Top-right secondary badge - repositioned to leave space for wishlist button */}
+          {/* Top-right secondary badge */}
           {product.secondaryBadge && (
             <div className="absolute -top-1 right-[44px] z-10">
               <ProductBadge variant={product.secondaryBadge} />
             </div>
           )}
 
-          {/* Out ofstock overlay */}
+          {/* Out of stock overlay */}
           {isOutOfStock && (
-            <div className="absolute inset-0 flex-center bg-black/40 backdrop-blur-lg">
-              <Badge variant={"secondary"} className="w-full bg-destructive px-6 py-4 text-base text-white uppercase">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-lg">
+              <Badge variant={"secondary"} className="w-full bg-destructive px-6 py-4 text-center text-base text-white uppercase">
                 Out of stock
               </Badge>
             </div>
           )}
         </Link>
 
-        {/* Floating Wishlist Heart Button - outside the Link to prevent invalid nested interactivity */}
+        {/* Floating Wishlist Heart Button */}
         <div className="absolute top-0 right-0 z-20">
           <ProductWishlistButton productId={product.id} productName={product.name} variant="floating" />
         </div>
       </div>
+
       {/* content */}
-      <div className="flex flex-col pt-1 pb-4">
-        <div className="px-1">
-          <StarRating value={4} />
-          <h3 className="mt-1 line-clamp-2 text-base leading-5 font-bold tracking-tighter md:text-lg">{product.name}</h3>
+      <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col border-x border-border px-2 py-2">
+          <div>
+            <StarRating value={4} />
+            <h3 className="mt-1 line-clamp-2 text-base leading-5 font-bold tracking-tighter md:text-lg">{product.name}</h3>
+          </div>
+          {/* ML variant badges */}
+          {mlVariants.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {mlVariants.map((variant) => {
+                const isSelected = selectedMl === variant.ml
+                return (
+                  <Badge key={variant.ml} variant={isSelected ? "default" : "outline"} asChild>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMl(variant.ml)}
+                      className={isSelected ? "cursor-pointer" : "cursor-pointer hover:bg-muted hover:text-muted-foreground"}
+                    >
+                      {variant.ml}ml
+                    </button>
+                  </Badge>
+                )
+              })}
+            </div>
+          )}
         </div>
 
-        {/* ML variant badges — interactive */}
-        {mlVariants.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-1">
-            {mlVariants.map((variant) => {
-              const isSelected = selectedMl === variant.ml
-              return (
-                <Badge key={variant.ml} variant={isSelected ? "default" : "outline"} asChild>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedMl(variant.ml)}
-                    className={isSelected ? "cursor-pointer" : "cursor-pointer hover:bg-muted hover:text-muted-foreground"}
-                  >
-                    {variant.ml}ml
-                  </button>
-                </Badge>
-              )
-            })}
-          </div>
-        )}
-
         {/* price-actions */}
-        <div className="mt-2 flex gap-1 border border-border">
+        <div className="flex gap-1 border border-border">
           <div className="flex flex-1 flex-col justify-center py-1 pl-2">
             <span className="text-sm font-bold text-foreground/80">{TakaFormatter.format(displayPrice)}</span>
             {displayOriginalPrice && (
